@@ -168,14 +168,201 @@
   --tracking-wide: calc(var(--tracking-normal) + 0.025em);
   --tracking-wider: calc(var(--tracking-normal) + 0.05em);
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+
+  --animate-blink: blink 1s step-end infinite;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-fade-in-up: fadeInUp 0.5s ease forwards;
+  --animate-glitch: glitch 0.3s ease;
+  --animate-status-ping: status-ping 2s ease-in-out infinite;
 }
+
+/* ─── Keyframe Animations ─────────────────────────────────── */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px 1px hsl(135.2941 100% 50% / 0.15); }
+  50% { box-shadow: 0 0 20px 3px hsl(135.2941 100% 50% / 0.40); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); clip-path: polygon(0 15%, 100% 15%, 100% 40%, 0 40%); }
+  40% { transform: translate(2px, -1px); clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -1px); }
+  100% { transform: translate(0); clip-path: none; }
+}
+
+@keyframes status-ping {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(-6px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scan {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+/* ─── Base Layer ──────────────────────────────────────────── */
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
+    background-image:
+      radial-gradient(circle, hsl(135.2941 100% 50% / 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: oklch(0.08 0 0);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.3053 0.1039 142.4953);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.8686 0.2776 144.4661);
+  }
+
+  /* Text selection */
+  ::selection {
+    background: oklch(0.8686 0.2776 144.4661);
+    color: oklch(0 0 0);
+  }
+}
+
+/* ─── Utility Classes ─────────────────────────────────────── */
+
+/* Blinking terminal cursor */
+.terminal-cursor::after {
+  content: '█';
+  display: inline-block;
+  color: oklch(0.8686 0.2776 144.4661);
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+/* Glow text */
+.glow-text {
+  text-shadow:
+    0 0 8px hsl(135.2941 100% 50% / 0.8),
+    0 0 20px hsl(135.2941 100% 50% / 0.4);
+}
+
+/* Pulse glow border */
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Fade in up */
+.fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Status indicator dot */
+.status-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: oklch(0.8686 0.2776 144.4661);
+  border-radius: 50%;
+}
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: oklch(0.8686 0.2776 144.4661);
+  animation: status-ping 2s ease-in-out infinite;
+}
+
+/* Nav underline slide */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: oklch(0.8686 0.2776 144.4661);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.nav-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Scanline overlay for special sections */
+.scanline {
+  position: relative;
+}
+.scanline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    hsl(135.2941 100% 50% / 0.015) 2px,
+    hsl(135.2941 100% 50% / 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Glitch hover for headings */
+.glitch-hover:hover {
+  animation: glitch 0.3s ease;
+}
+
+/* Corner cut accent (top-right) */
+.corner-cut {
+  position: relative;
+  overflow: hidden;
+}
+.corner-cut::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  background: oklch(0.8686 0.2776 144.4661);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
 }

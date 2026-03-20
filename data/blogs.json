@@ -1,0 +1,155 @@
+{
+  "blogs": [
+    {
+      "slug": "test",
+      "title": "test",
+      "description": "test",
+      "content": "test",
+      "date": "2026-03-20",
+      "readTime": "5 min",
+      "category": "Database",
+      "tags": [
+        "test"
+      ],
+      "published": false,
+      "featured": false,
+      "id": "1773990303694"
+    },
+    {
+      "id": "1",
+      "slug": "building-scalable-web-applications-with-next",
+      "title": "Building Scalable Web Applications with Next",
+      "description": "Deep dive into Next.js 16 features, server components, and best practices for building performant applications.",
+      "content": "## Introduction\n\nNext.js has become the go-to framework for production React applications, and with version 16 the framework took another leap forward. Server Components fundamentally change how we think about data fetching and bundle size — by default, components render on the server and zero JavaScript is shipped to the client unless explicitly opted in.\n\n## Server Components vs Client Components\n\nThe biggest mental shift in modern Next.js is understanding when something runs on the server versus the client. Server Components handle data fetching, access backend resources directly, and keep sensitive keys off the client. Client Components add interactivity — state, effects, browser APIs. The rule of thumb: push as much logic server-side as possible.\n\n```tsx\n// Server Component — runs only on the server\nasync function BlogList() {\n  const posts = await db.query('SELECT * FROM blogs');\n  return <ul>{posts.map(p => <li key={p.id}>{p.title}</li>)}</ul>;\n}\n```\n\n## Caching and Revalidation\n\nNext.js 16 ships with granular caching primitives. `fetch()` calls are automatically deduped and cached. You control staleness with `{ next: { revalidate: 60 } }` for ISR or `{ cache: 'no-store' }` for always-fresh data. This replaces the old `getStaticProps` / `getServerSideProps` dichotomy with a single, flexible API.\n\n## Performance Best Practices\n\nImage optimization with `next/image`, font optimization with `next/font`, and the new `Partial Prerendering` feature allow you to ship a static shell instantly while streaming dynamic content into placeholders. Combined with the App Router's nested layouts that avoid full-page re-renders on navigation, you get near-native perceived performance with minimal effort.\n\n## Conclusion\n\nNext.js 16 is not just an incremental upgrade — it is a complete rethinking of the React rendering model. Embrace Server Components, use the built-in caching layer, and reach for Partial Prerendering on pages that mix static and dynamic content. The result is applications that are fast by default.",
+      "date": "2026-03-15",
+      "readTime": "12 min",
+      "category": "Web Development",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Performance"
+      ],
+      "published": false,
+      "featured": true
+    },
+    {
+      "id": "2",
+      "slug": "understanding-ai-chatbots-and-llm-integration",
+      "title": "Understanding AI Chatbots and LLM Integration",
+      "description": "Comprehensive guide to implementing AI chatbots using LLMs, vector databases, and proper prompt engineering.",
+      "content": "## The LLM Landscape\n\nLarge Language Models have moved from research curiosity to production infrastructure in the span of two years. GPT-4, Claude, Gemini, and open-weight models like Llama give developers a menu of options that differ in cost, latency, context window, and capability. Choosing the right model is as important as any other architectural decision.\n\n## Prompt Engineering Fundamentals\n\nA model is only as good as the instructions you give it. System prompts define the assistant's persona, constraints, and output format. Few-shot examples in the prompt can dramatically improve consistency. Chain-of-thought prompting — asking the model to reason step-by-step before answering — reduces hallucination on complex tasks.\n\n```ts\nconst response = await openai.chat.completions.create({\n  model: 'gpt-4o',\n  messages: [\n    { role: 'system', content: 'You are a helpful assistant that answers only about TypeScript.' },\n    { role: 'user', content: userMessage },\n  ],\n  temperature: 0.3,\n});\n```\n\n## Vector Databases and RAG\n\nRetrieval-Augmented Generation solves the hallucination problem for domain-specific knowledge. You embed your documents into a vector space using an embedding model, store them in a vector DB like Pinecone or pgvector, and at query time retrieve the most semantically relevant chunks to stuff into the context window. The model answers based on real data rather than parametric memory.\n\n## Streaming and UX\n\nUsers expect chatbot responses to stream token-by-token, like watching someone type. Next.js supports streaming responses out of the box via the `ReadableStream` API and the Vercel AI SDK's `useChat` hook. Never block the UI waiting for a full response — stream it.\n\n## Conclusion\n\nBuilding a production LLM application requires more than calling an API. Think carefully about prompt design, implement RAG for grounded answers, stream responses for good UX, and instrument everything with logging and evals to catch regressions as models update.",
+      "date": "2026-03-10",
+      "readTime": "15 min",
+      "category": "AI/ML",
+      "tags": [
+        "AI",
+        "LLM",
+        "Integration"
+      ],
+      "published": true,
+      "featured": true
+    },
+    {
+      "id": "3",
+      "slug": "postgresql-optimization-techniques",
+      "title": "PostgreSQL Optimization Techniques",
+      "description": "Best practices for optimizing PostgreSQL queries, indexing strategies, and database architecture.",
+      "content": "## Why PostgreSQL Performance Matters\n\nA slow database is almost always the bottleneck in a web application. A query that takes 200ms instead of 2ms multiplied across thousands of requests per second becomes a serious problem. The good news: PostgreSQL has excellent tooling for diagnosing and fixing performance issues.\n\n## EXPLAIN ANALYZE is Your Best Friend\n\nBefore optimizing anything, measure it. `EXPLAIN ANALYZE` shows the actual execution plan with real row counts and timings. Look for Sequential Scans on large tables — that is usually the first sign a missing index is causing a full-table read.\n\n```sql\nEXPLAIN (ANALYZE, BUFFERS)\nSELECT * FROM orders\nWHERE user_id = 42 AND status = 'pending'\nORDER BY created_at DESC\nLIMIT 20;\n```\n\n## Indexing Strategy\n\nPartial indexes, composite indexes, and expression indexes are underused tools. A partial index on `WHERE deleted_at IS NULL` can cut index size by 90% on soft-delete tables. Composite indexes should follow the selectivity rule: put the most selective column first. Covering indexes (using `INCLUDE`) eliminate heap fetches entirely for read-heavy queries.\n\n## Connection Pooling\n\nPostgreSQL creates a new OS process per connection. At scale, hundreds of connections exhaust memory. PgBouncer in transaction-mode pooling can multiplex thousands of application connections onto a handful of real database connections with near-zero overhead. This alone can 10x your maximum throughput.\n\n## Conclusion\n\nOptimizing PostgreSQL is a systematic process: measure with EXPLAIN ANALYZE, add targeted indexes, tune your query structure, and add a connection pooler. Avoid the trap of premature optimization — profile first, then fix the specific bottleneck you have measured.",
+      "date": "2026-03-05",
+      "readTime": "10 min",
+      "category": "Database",
+      "tags": [
+        "PostgreSQL",
+        "Performance",
+        "Database Design"
+      ],
+      "published": true,
+      "featured": false
+    },
+    {
+      "id": "4",
+      "slug": "typescript-type-system-mastery",
+      "title": "TypeScript Type System Mastery",
+      "description": "Advanced TypeScript concepts including generics, conditional types, and utility types for production code.",
+      "content": "## Beyond the Basics\n\nMost developers learn TypeScript's basic types — `string`, `number`, `boolean`, interfaces, and enums — and stop there. But the real power of TypeScript's type system comes from its more advanced features: generics, conditional types, mapped types, and template literal types. Mastering these turns TypeScript from a linter into a powerful tool for encoding business logic at the type level.\n\n## Generics and Constraints\n\nGenerics make functions and data structures reusable without sacrificing type safety. Constraints (`extends`) narrow what types are acceptable. The `infer` keyword inside conditional types lets you extract type information from complex structures at compile time.\n\n```ts\ntype ReturnType<T extends (...args: never[]) => unknown> =\n  T extends (...args: never[]) => infer R ? R : never;\n\n// Usage\ntype Num = ReturnType<() => number>; // number\n```\n\n## Mapped and Conditional Types\n\nMapped types transform every property of an object type. `Partial<T>`, `Required<T>`, `Readonly<T>`, and `Pick<T, K>` are all implemented as mapped types in TypeScript's standard library. Conditional types (`T extends U ? X : Y`) allow branching logic at the type level — useful for building type-safe API response handlers.\n\n## Template Literal Types\n\nTemplate literal types compose string types together. You can build type-safe route strings, CSS class names, or event names. Combined with `keyof` and mapped types, they enable APIs that are impossible to misuse.\n\n```ts\ntype EventName<T extends string> = `on${Capitalize<T>}`;\ntype ClickEvent = EventName<'click'>; // 'onClick'\n```\n\n## Conclusion\n\nAdvanced TypeScript types are not academic exercises — they eliminate entire categories of runtime errors at compile time. The investment in learning conditional types, template literals, and proper generic constraints pays off in safer refactors and self-documenting APIs.",
+      "date": "2026-02-28",
+      "readTime": "14 min",
+      "category": "TypeScript",
+      "tags": [
+        "TypeScript",
+        "Type System",
+        "Advanced"
+      ],
+      "published": true,
+      "featured": false
+    },
+    {
+      "id": "5",
+      "slug": "docker-and-containerization-best-practices",
+      "title": "Docker and Containerization Best Practices",
+      "description": "Guide to containerizing applications, optimizing Docker images, and orchestrating with Docker Compose.",
+      "content": "## Why Containerize\n\nContainers solve the classic \"works on my machine\" problem by bundling your application with its exact dependencies, runtime, and configuration into a portable image. Docker has become the standard unit of deployment across cloud providers, CI/CD pipelines, and local development environments.\n\n## Writing Efficient Dockerfiles\n\nThe order of instructions in a Dockerfile matters enormously for build cache efficiency. Put instructions that change rarely (installing OS dependencies) early, and instructions that change often (copying application code) late. Use multi-stage builds to separate build-time dependencies from the production image.\n\n```dockerfile\n# Build stage\nFROM node:22-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nRUN npm run build\n\n# Production stage\nFROM node:22-alpine\nWORKDIR /app\nCOPY --from=builder /app/.next ./.next\nCOPY --from=builder /app/node_modules ./node_modules\nCMD [\"node\", \"server.js\"]\n```\n\n## Docker Compose for Local Development\n\nDocker Compose orchestrates multi-container applications locally. Define your app, database, cache, and any other services in a `docker-compose.yml`. Use named volumes for database persistence, health checks to ensure services start in the right order, and `.env` files for configuration.\n\n## Security Hardening\n\nRun containers as non-root users. Never store secrets in environment variables baked into images — use Docker secrets or a secrets manager at runtime. Scan images for vulnerabilities with `docker scout` or Snyk. Keep base images minimal (alpine or distroless) to reduce attack surface.\n\n## Conclusion\n\nGood Docker hygiene — lean images, layer caching, multi-stage builds, and non-root users — pays dividends in faster CI pipelines, smaller attack surfaces, and more predictable deployments. Treat your Dockerfile as carefully as your application code.",
+      "date": "2026-02-20",
+      "readTime": "11 min",
+      "category": "DevOps",
+      "tags": [
+        "Docker",
+        "DevOps",
+        "Containers"
+      ],
+      "published": true,
+      "featured": false
+    },
+    {
+      "id": "6",
+      "slug": "react-hooks-from-basics-to-advanced-patterns",
+      "title": "React Hooks: From Basics to Advanced Patterns",
+      "description": "Mastering React hooks including custom hooks, context, and state management patterns for modern React.",
+      "content": "## The Hook Model\n\nHooks replaced class components' lifecycle methods with a composable, function-based API. `useState` manages local state. `useEffect` synchronizes with external systems. `useRef` persists values across renders without triggering re-renders. Understanding when React re-renders — and how to prevent unnecessary re-renders — is the foundation of performant React.\n\n## Custom Hooks\n\nCustom hooks are the React pattern for code reuse. Any function that calls other hooks is a hook. Extract repeated stateful logic — data fetching, form handling, media queries, WebSocket connections — into custom hooks. The naming convention (`use` prefix) tells React's linter to apply hook rules.\n\n```ts\nfunction useFetch<T>(url: string) {\n  const [data, setData] = useState<T | null>(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState<Error | null>(null);\n\n  useEffect(() => {\n    fetch(url)\n      .then(r => r.json())\n      .then(setData)\n      .catch(setError)\n      .finally(() => setLoading(false));\n  }, [url]);\n\n  return { data, loading, error };\n}\n```\n\n## Performance: useMemo, useCallback, memo\n\n`useMemo` memoizes expensive computations. `useCallback` stabilizes function references to prevent child re-renders. `React.memo` prevents a component from re-rendering when its props haven't changed. The trap: overusing these adds complexity and memory overhead. Profile first with React DevTools, then memoize specific bottlenecks.\n\n## State Architecture\n\nFor complex state, `useReducer` gives you Redux-like predictability without the boilerplate. For global state that doesn't change frequently (theme, auth, locale), Context + `useReducer` is sufficient. For frequently-updated global state (server data, real-time feeds), reach for a dedicated library like Zustand or Jotai.\n\n## Conclusion\n\nHooks are simple primitives that compose into powerful patterns. Master `useState`, `useEffect`, and `useRef` first. Then learn when custom hooks provide the right abstraction. Add `useMemo` and `useCallback` only where profiling reveals a genuine bottleneck.",
+      "date": "2026-02-15",
+      "readTime": "13 min",
+      "category": "React",
+      "tags": [
+        "React",
+        "Hooks",
+        "State Management"
+      ],
+      "published": true,
+      "featured": false
+    },
+    {
+      "id": "7",
+      "slug": "api-design-principles-for-modern-applications",
+      "title": "API Design Principles for Modern Applications",
+      "description": "RESTful and GraphQL API design patterns, authentication, rate limiting, and best practices.",
+      "content": "## REST vs GraphQL\n\nREST and GraphQL are not competitors — they are tools suited to different problems. REST excels for simple CRUD resources, public APIs where HTTP caching matters, and teams that want predictable, cacheable endpoints. GraphQL shines for complex, interconnected data graphs, mobile clients that need to minimize over-fetching, and rapid UI iteration without coordinating backend changes.\n\n## RESTful Design Conventions\n\nGood REST APIs use nouns for resources (`/users`, `/orders`), HTTP verbs for actions (`GET`, `POST`, `PATCH`, `DELETE`), and consistent status codes. Version your API from day one (`/v1/`) — changing a public API without versioning is a breaking change that hurts your consumers. Use plural nouns, filter with query params, and never expose internal database IDs if you can use UUIDs or slugs instead.\n\n## Authentication Patterns\n\nJWT access tokens (short-lived, 15 minutes) paired with refresh tokens (long-lived, stored in httpOnly cookies) is the modern standard. Never store JWTs in localStorage — XSS can steal them. API keys for machine-to-machine communication should be hashed in the database and displayed to the user only once at creation.\n\n## Rate Limiting and Resilience\n\nRate limiting protects your API from abuse and accidental denial-of-service. Use a sliding window or token bucket algorithm, return `429 Too Many Requests` with a `Retry-After` header, and apply different limits per user tier. Add timeouts to outbound requests, implement circuit breakers for downstream dependencies, and always return meaningful error bodies — not just a status code.\n\n## Conclusion\n\nGreat API design is invisible — consumers can do what they need without reading documentation, errors are self-explanatory, and the surface area is small enough to hold in your head. Consistency and predictability beat cleverness every time.",
+      "date": "2026-02-10",
+      "readTime": "12 min",
+      "category": "Backend",
+      "tags": [
+        "API",
+        "REST",
+        "Design"
+      ],
+      "published": true,
+      "featured": false
+    },
+    {
+      "id": "8",
+      "slug": "testing-strategies-for-full-stack-applications",
+      "title": "Testing Strategies for Full-Stack Applications",
+      "description": "Unit testing, integration testing, E2E testing strategies and tools for comprehensive test coverage.",
+      "content": "## The Testing Pyramid\n\nThe classic testing pyramid — many unit tests, fewer integration tests, even fewer E2E tests — still holds in 2026. Unit tests are fast and isolated. Integration tests verify that components work together. E2E tests verify that user workflows work end-to-end in a real browser. The trap is inverting the pyramid: heavy E2E suites that are slow, flaky, and hard to debug.\n\n## Unit Testing with Vitest\n\nVitest has largely replaced Jest in the Vite/Next.js ecosystem thanks to its speed and native ESM support. Test pure functions with straightforward input/output assertions. For React components, test behavior not implementation — what the user sees and can interact with, not which internal functions were called.\n\n```ts\nimport { describe, it, expect } from 'vitest';\nimport { slugify } from './utils';\n\ndescribe('slugify', () => {\n  it('converts spaces to hyphens', () => {\n    expect(slugify('Hello World')).toBe('hello-world');\n  });\n  it('removes special characters', () => {\n    expect(slugify('TypeScript & React!')).toBe('typescript-react');\n  });\n});\n```\n\n## Integration Testing\n\nIntegration tests hit real databases and real HTTP handlers. Use a test database that's seeded before each test run and torn down after. For Next.js API routes, use `supertest` or the built-in `fetch` with your test server. Test the full request/response cycle including auth middleware and error handling.\n\n## E2E Testing with Playwright\n\nPlaywright runs your tests in real browsers (Chromium, Firefox, WebKit) with a clean, async API. Test critical user journeys: sign up, log in, complete a purchase, submit a form. Use `data-testid` attributes instead of CSS selectors so tests don't break on styling changes. Run E2E tests in CI against a staging environment, not localhost.\n\n## Conclusion\n\nA good test suite gives you confidence to refactor. Invest most of your testing effort at the unit and integration level where tests are fast and deterministic. Reserve E2E tests for the handful of flows that, if broken, would cause the most damage.",
+      "date": "2026-02-05",
+      "readTime": "9 min",
+      "category": "Testing",
+      "tags": [
+        "Testing",
+        "Quality",
+        "Jest"
+      ],
+      "published": true,
+      "featured": false
+    }
+  ]
+}

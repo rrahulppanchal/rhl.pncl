@@ -1,0 +1,129 @@
+{
+  "projects": [
+    {
+      "id": "1",
+      "slug": "parking-management-system",
+      "name": "Parking Management System",
+      "description": "Migrated a legacy desktop solution into a modern, multi-tenant SaaS platform handling real-time parking operations for international clients.",
+      "content": "## Overview\n\nLed the full migration of a legacy desktop parking solution into a modern, cloud-native multi-tenant SaaS platform. The system handles real-time parking operations including booking, payments, and slot allocation for international clients across multiple time zones.\n\n## Problem Statement\n\nThe client operated a desktop-only parking management tool that couldn't scale across locations, required manual updates at each terminal, and had no web or mobile access. The goal was to re-architect the entire system as a SaaS product that could serve multiple parking operators globally from a single codebase.\n\n## Architecture\n\nBuilt on NestJS with a PostgreSQL database managed via Amazon RDS. React.js with Redux handles the frontend. The entire infrastructure runs on AWS with a CI/CD pipeline automating deployments.\n\n```ts\n// Multi-tenant middleware — resolves tenant context from subdomain\n@Injectable()\nexport class TenantMiddleware implements NestMiddleware {\n  use(req: Request, res: Response, next: NextFunction) {\n    const host = req.hostname;\n    const tenant = host.split('.')[0];\n    req['tenantId'] = tenant;\n    next();\n  }\n}\n```\n\n## AWS Infrastructure\n\n- **EC2 & Auto-Scaling**: Core application deployed on EC2 behind an Application Load Balancer (ALB) to handle traffic spikes during peak parking hours\n- **Amazon RDS (PostgreSQL)**: Managed database with high availability, automated backups, and read replicas for heavy reporting queries\n- **S3 & CloudFront**: Vehicle images and documents stored in S3, served via CloudFront for low-latency global access\n- **CI/CD Pipeline**: AWS CodePipeline automates testing and deployment, reducing release cycles from days to hours\n\n## Key Features\n\n- Real-time slot booking and availability tracking\n- Payment gateway integration with automated invoicing\n- Multi-tenant architecture supporting independent operator configurations\n- Role-based access control (Admin, Operator, Attendant)\n- Live dashboard with occupancy metrics and revenue analytics\n- Docker-based local development environment\n\n## Outcome\n\nSuccessfully deployed and serving international clients. Release cycles reduced from days to hours. The platform now handles real-time operations across multiple locations simultaneously.",
+      "tech": [
+        "NestJS",
+        "PostgreSQL",
+        "React.js",
+        "Redux",
+        "Docker",
+        "AWS"
+      ],
+      "year": "2024",
+      "link": "#",
+      "github": "",
+      "status": "Completed",
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "2",
+      "slug": "enterprise-cashflow-management",
+      "name": "Enterprise Cash Flow Management",
+      "description": "Transformed a manual Excel-based workflow into a secure web and mobile FinTech solution for a Dubai-based enterprise with multi-company support.",
+      "content": "## Overview\n\nBuilt a secure enterprise-grade financial management platform for a Dubai-based client, replacing a complex manual Excel workflow with a unified web and mobile solution. The platform handles multi-entity accounting, real-time asset tracking, and comprehensive financial reporting.\n\n## Problem Statement\n\nThe client managed finances for multiple business entities using spreadsheets — a process that was error-prone, not auditable, and offered no real-time visibility. Switching between companies required separate Excel files, making consolidated reporting nearly impossible.\n\n## Solution\n\nDesigned a Node.js backend with PostgreSQL, exposing a REST API consumed by both the web dashboard and a mobile app. A signature \"Multiple Company Switch\" feature lets authorized users toggle between distinct business entities without logging out.\n\n```js\n// Company context switching middleware\napp.use('/api', async (req, res, next) => {\n  const { companyId } = req.headers;\n  if (companyId) {\n    req.db = await getTenantConnection(companyId);\n  }\n  next();\n});\n```\n\n## AWS Infrastructure\n\n- **VPC & Security Groups**: Isolated sensitive financial data within a private VPC, enforcing strict access controls and compliance requirements\n- **CloudWatch**: Configured monitoring and alarms to detect transaction anomalies and track system health in real-time\n- **RDS Backup Strategy**: Automated snapshotting and cross-region replication to prevent data loss on critical financial records\n\n## Key Features\n\n- Multiple Company Switch — manage distinct entities from one session\n- Real-time asset tracking and balance sheets\n- Cash flow forecasting with historical trend analysis\n- Automated report generation (PDF/Excel export)\n- Role-based permissions with full audit logging\n- Mobile app for on-the-go approvals and reporting\n\n## Outcome\n\nEliminated manual spreadsheet dependency entirely. The finance team gained real-time visibility across all entities and reduced monthly close time significantly.",
+      "tech": [
+        "Node.js",
+        "PostgreSQL",
+        "React.js",
+        "AWS",
+        "Mobile App"
+      ],
+      "year": "2024",
+      "link": "#",
+      "github": "",
+      "status": "Completed",
+      "featured": true,
+      "published": true
+    },
+    {
+      "id": "3",
+      "slug": "ai-driven-crm-platform",
+      "name": "AI-Driven Marketing & CRM Platform",
+      "description": "Unified CRM and advertising platform that automates lead scoring and ad campaign optimization, boosting conversion rates by 35%.",
+      "content": "## Overview\n\nBuilt a unified CRM and advertising platform that uses AI to automate lead scoring, campaign optimization, and customer engagement. The system integrates OpenAI's API with custom n8n workflows to process leads intelligently and trigger personalized marketing actions.\n\n## The Problem\n\nThe client's marketing and sales teams operated in silos — CRM data lived separately from ad platforms, lead scoring was manual, and follow-up timing was inconsistent. The goal was to build a single platform that could ingest leads from multiple sources, score them with AI, and trigger automated campaigns.\n\n## Architecture\n\nNestJS backend with a React.js frontend. n8n handles workflow automation and third-party integrations. OpenAI API drives lead scoring and content generation. AWS Lambda and SQS decouple heavy AI processing from the user-facing application.\n\n```ts\n// AI-powered lead scoring\nasync function scoreLeadWithAI(lead: LeadData): Promise<number> {\n  const prompt = buildScoringPrompt(lead);\n  const response = await openai.chat.completions.create({\n    model: 'gpt-4o',\n    messages: [{ role: 'user', content: prompt }],\n    response_format: { type: 'json_object' },\n  });\n  const { score } = JSON.parse(response.choices[0].message.content!);\n  return score; // 0–100\n}\n```\n\n## AWS Infrastructure\n\n- **AWS Lambda**: Serverless functions process incoming lead data asynchronously, keeping the main application responsive\n- **Amazon SQS**: Decouples heavy AI analysis tasks from the UI by queuing requests for reliable background processing\n- **Amazon SES**: Handles high-volume marketing email blasts with high deliverability rates\n\n## Key Features\n\n- AI-powered lead scoring (0–100) using OpenAI GPT-4o\n- Automated campaign triggers based on lead score thresholds\n- n8n workflow automation for cross-platform data sync\n- Ad spend optimization with ROI tracking per channel\n- Unified customer timeline across all touchpoints\n- Real-time conversion funnel analytics dashboard\n\n## Outcome\n\nConversion rates improved by 35% within the first quarter of deployment. Lead response time dropped from hours to minutes through automated follow-up workflows.",
+      "tech": [
+        "NestJS",
+        "Node.js",
+        "React.js",
+        "OpenAI API",
+        "n8n",
+        "AWS"
+      ],
+      "year": "2024",
+      "link": "#",
+      "github": "",
+      "status": "Completed",
+      "featured": true,
+      "published": true
+    },
+    {
+      "id": "4",
+      "slug": "sports-gym-management",
+      "name": "Sports & Gym Management Application",
+      "description": "Comprehensive fitness ecosystem for training management, nutrition tracking, and community engagement with gamification features.",
+      "content": "## Overview\n\nA full-featured fitness platform enabling users to manage training programs, track nutrition, and engage with a fitness community through social feeds and gamification. Designed for gyms, coaches, and individual athletes.\n\n## Problem Statement\n\nFitness studios and gym chains lacked an integrated digital platform — workout tracking, nutrition, scheduling, and community features existed as separate apps. The client wanted a single ecosystem that could serve both B2B (gym operators) and B2C (members) use cases.\n\n## Architecture\n\nNode.js REST API backend with PostgreSQL for relational data and Redis (Elasticache) for caching hot data like social feeds and leaderboards. React.js frontend with real-time WebSocket connections for live session tracking.\n\n```js\n// Leaderboard computed from Redis sorted set\nasync function getWeeklyLeaderboard(gymId: string) {\n  const key = `leaderboard:${gymId}:${getWeekKey()}`;\n  const members = await redis.zrevrange(key, 0, 9, 'WITHSCORES');\n  return parseLeaderboardEntries(members);\n}\n```\n\n## AWS Infrastructure\n\n- **S3 (Media Storage)**: Manages high volumes of user-generated content (workout photos and videos) with lifecycle policies to control storage costs\n- **Elasticache (Redis)**: Caches social feed data and leaderboard calculations to handle high-traffic competition events without database strain\n\n## Key Features\n\n- Workout builder with exercise library and custom routines\n- Nutrition tracking with macro calculator and meal plans\n- Social feed with post, like, and comment functionality\n- Gamification: badges, streaks, and weekly leaderboards\n- Coach dashboard for client progress monitoring\n- Gym operator portal for class scheduling and attendance\n- Push notifications for workout reminders and achievements\n\n## Outcome\n\nDeployed for multiple gym chains. The social and gamification features drove a significant increase in daily active users and member retention rates.",
+      "tech": [
+        "Node.js",
+        "React.js",
+        "PostgreSQL",
+        "Redis",
+        "AWS",
+        "WebSockets"
+      ],
+      "year": "2023",
+      "link": "#",
+      "github": "",
+      "status": "Completed",
+      "featured": false,
+      "published": true
+    },
+    {
+      "id": "5",
+      "slug": "database-query-chatbot",
+      "name": "Database Query Chatbot",
+      "description": "AI agent using RAG and LangChain that translates natural language into secure, dynamic SQL queries for non-technical users.",
+      "content": "## Overview\n\nAn AI-powered chatbot that lets non-technical users query complex databases using plain English. The system uses LangChain with a RAG pipeline to understand database schema context and generate accurate, safe SQL queries in real time.\n\n## The Problem\n\nBusiness analysts and operations teams frequently needed data insights but had to wait for developers to write SQL queries — a bottleneck that slowed decision-making. The goal was to give non-technical users direct, self-serve access to data through a conversational interface.\n\n## How It Works\n\nAt setup, the database schema (table names, column names, relationships, sample values) is embedded into a vector database. When a user asks a question, the query is embedded and the most relevant schema chunks are retrieved. These are injected into the LLM prompt alongside strict safety constraints.\n\n```ts\nasync function generateQuery(question: string, dbSchema: string): Promise<string> {\n  const schemaEmbedding = await embedText(question);\n  const relevantTables = await vectorDb.similaritySearch(schemaEmbedding, 5);\n  \n  const prompt = `\n    Given the following database schema:\n    ${relevantTables.map(t => t.pageContent).join('\\n')}\n    \n    Generate a safe, read-only SQL query for: ${question}\n    Rules: Only SELECT statements. No DELETE, UPDATE, DROP, or INSERT.\n  `;\n  \n  return await llm.invoke(prompt);\n}\n```\n\n## Key Features\n\n- Natural language to SQL translation via LangChain\n- RAG pipeline for schema-aware query generation\n- Read-only query enforcement (no destructive operations)\n- Query explanation in plain English alongside the SQL\n- Support for complex JOINs, aggregations, and subqueries\n- Vector DB stores schema embeddings for fast semantic retrieval\n- Query history and bookmarking for frequent lookups\n\n## Challenges\n\nThe hardest problem was handling ambiguous queries. When a user asks about \"last month's sales\", the model needs to understand the correct date column, format, and timezone. Solved by enriching schema embeddings with sample data and column descriptions.\n\n## Outcome\n\nReduced ad-hoc data requests to the engineering team by a significant margin. Non-technical team members can now get instant answers without writing a single line of SQL.",
+      "tech": [
+        "Node.js",
+        "TypeScript",
+        "LangChain",
+        "Vector DB",
+        "SQL",
+        "RAG"
+      ],
+      "year": "2024",
+      "link": "#",
+      "github": "",
+      "status": "Completed",
+      "featured": false,
+      "published": true
+    },
+    {
+      "id": "6",
+      "slug": "ai-chatbot-rag",
+      "name": "AI Chatbot with RAG Pipeline",
+      "description": "LLM-powered conversational AI embedded into web products with context awareness, multi-language support, and RAG for factual accuracy.",
+      "content": "## Overview\n\nAn LLM-powered conversational AI system designed to be embedded into web products as a support and discovery tool. It understands context across a session, retrieves relevant knowledge from a vector database, and responds in the user's language — supporting English and Hindi.\n\n## The Problem\n\nGeneric chatbot widgets give generic answers. Businesses need an AI assistant that actually knows their product — their FAQs, their docs, their pricing, their edge cases — and can answer specific questions without hallucinating. The challenge is combining the fluency of LLMs with the accuracy of a retrieval system.\n\n## How It Works\n\nThe system uses a Retrieval-Augmented Generation (RAG) architecture. At setup, the client's knowledge base is chunked and embedded into a vector database. At query time, the user's message is embedded, the top-k most semantically relevant chunks are retrieved, and injected into the LLM's context window alongside a strict system prompt.\n\n```python\ndef answer_question(user_query: str, session_history: list) -> str:\n    query_embedding = embed(user_query)\n    chunks = vector_db.query(query_embedding, top_k=5)\n    prompt = build_prompt(chunks, session_history, user_query)\n    return llm.stream(prompt)\n```\n\n## Key Features\n\n- Session-aware conversation memory (last 10 turns)\n- Retrieval-Augmented Generation for factual accuracy\n- Automatic language detection and response matching\n- Admin dashboard to upload and manage the knowledge base\n- Confidence scoring — low-confidence responses route to human support\n- Streaming responses for instant perceived performance\n\n## Challenges\n\nThe hardest problem was chunking strategy. Splitting documents naively by character count lost semantic context. The solution was a hybrid approach: recursive paragraph-aware splitting with overlap, plus metadata tagging so retrieved chunks carry their source document and section heading.\n\n## Outcome\n\nCore RAG pipeline complete and live. Multilingual support active for English and Hindi. Admin dashboard for knowledge base management deployed.",
+      "tech": [
+        "LangChain",
+        "Node.js",
+        "TypeScript",
+        "Vector DB",
+        "OpenAI API",
+        "RAG"
+      ],
+      "year": "2024",
+      "link": "#",
+      "github": "",
+      "status": "Completed",
+      "featured": false,
+      "published": true
+    }
+  ]
+}
