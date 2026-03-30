@@ -122,7 +122,7 @@ export default function Page() {
               <span className="terminal-cursor" />
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-              3+ years building scalable Node.js & NestJS systems, MERN stack applications, and AI-powered solutions using LangChain, RAG pipelines, and LLM APIs. Based in India.{' '}
+              6+ years building scalable Node.js & NestJS systems, MERN stack applications, and AI-powered solutions using LangChain, RAG pipelines, and LLM APIs. Based in India.{' '}
               <span className="text-primary font-mono">Always shipping.</span>
             </p>
           </section>
