@@ -1,16 +1,76 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SITE_URL, SITE_NAME } from "@/lib/site";
+import { RouteLoaderOverlay } from "@/components/route-loader-overlay";
+
+const SITE_TITLE = "Rahul Panchal — Senior Node.js / NestJS / AI Developer";
+const SITE_DESC =
+  "Senior Software Developer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and AI-powered solutions with LangChain, RAG pipelines, and LLM APIs. Based in India.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Rahul Panchal",
+    default: SITE_TITLE,
     template: "%s | Rahul Panchal",
   },
-  description: "Senior Software Developer specializing in Node.js, NestJS, MERN stack, and AI/LLM applications. Based in India.",
-  keywords: ["Rahul Panchal", "Senior Software Developer", "NestJS", "Node.js", "React", "Full Stack", "AI", "LangChain"],
-  authors: [{ name: "Rahul Panchal", url: "https://rahul-panchal.vercel.app" }],
+  description: SITE_DESC,
+  applicationName: SITE_NAME,
+  authors: [{ name: "Rahul Panchal", url: SITE_URL }],
   creator: "Rahul Panchal",
+  publisher: "Rahul Panchal",
+  keywords: [
+    "Rahul Panchal",
+    "Senior Software Developer",
+    "NestJS Developer",
+    "Node.js Developer",
+    "MERN Stack",
+    "React Developer",
+    "Next.js",
+    "AI Engineer",
+    "LangChain",
+    "RAG",
+    "LLM",
+    "Full Stack Developer India",
+  ],
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESC,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESC,
+    creator: "@rrahulppanchal",
+  },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-light-32x32.png", sizes: "32x32", media: "(prefers-color-scheme: light)" },
+      { url: "/icon-dark-32x32.png", sizes: "32x32", media: "(prefers-color-scheme: dark)" },
+    ],
+    apple: "/apple-icon.png",
+  },
+  category: "technology",
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+  width: "device-width",
+  initialScale: 1,
 };
 
 const geistSans = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -24,6 +84,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
       <body className="antialiased">
+        <RouteLoaderOverlay />
         {children}
       </body>
     </html>

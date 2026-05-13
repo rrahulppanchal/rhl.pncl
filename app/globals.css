@@ -174,6 +174,21 @@
   --animate-fade-in-up: fadeInUp 0.5s ease forwards;
   --animate-glitch: glitch 0.3s ease;
   --animate-status-ping: status-ping 2s ease-in-out infinite;
+
+  /* Font sizes scaled 1.2× (fonts only, not spacing/widths) */
+  --text-xs: 0.9rem;
+  --text-sm: 1.05rem;
+  --text-base: 1.2rem;
+  --text-lg: 1.35rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.8rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 2.7rem;
+  --text-5xl: 3.6rem;
+  --text-6xl: 4.5rem;
+  --text-7xl: 5.4rem;
+  --text-8xl: 7.2rem;
+  --text-9xl: 9.6rem;
 }
 
 /* ─── Keyframe Animations ─────────────────────────────────── */
@@ -222,6 +237,62 @@
 @keyframes scan {
   0% { background-position: 0 0; }
   100% { background-position: 0 100%; }
+}
+
+@keyframes loader-bar {
+  0%   { left: -40%; width: 40%; }
+  50%  { width: 60%; }
+  100% { left: 100%; width: 40%; }
+}
+
+@keyframes type-in {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes shake-x {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+@keyframes slide-down-fade {
+  from { transform: translateY(-12px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.shake-on-error {
+  animation: shake-x 0.55s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.popup-enter {
+  animation: slide-down-fade 0.25s ease-out both;
+}
+
+@keyframes click-shake {
+  0%   { transform: translate(0, 0) rotate(0); }
+  20%  { transform: translate(-2px, 1px) rotate(-1deg) scale(0.97); }
+  40%  { transform: translate(2px, -1px) rotate(1deg) scale(0.98); }
+  60%  { transform: translate(-1px, 1px) rotate(-0.5deg); }
+  80%  { transform: translate(1px, -1px) rotate(0.5deg); }
+  100% { transform: translate(0, 0) rotate(0); }
+}
+
+a:active,
+button:active,
+summary:active,
+[data-slot='button']:active,
+[data-slot='dropdown-menu-trigger']:active,
+[data-slot='select-trigger']:active,
+[data-slot='tabs-trigger']:active,
+[role='button']:active,
+[role='link']:active,
+[role='menuitem']:active,
+[role='tab']:active,
+[type='button']:active,
+[type='submit']:active,
+[type='reset']:active {
+  animation: click-shake 0.28s ease-out;
 }
 
 /* ─── Base Layer ──────────────────────────────────────────── */
@@ -365,4 +436,64 @@
   height: 16px;
   background: oklch(0.8686 0.2776 144.4661);
   clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* ─── Themed cursors (UNLAYERED — beats Tailwind @layer base/utilities) ───
+   Matrix green #00FF41. SVG data-URI + native fallback after the comma.
+   Supported: Chrome, Firefox, Safari, Edge, Opera. Legacy IE → fallback. */
+html,
+body {
+  cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cpath fill='%2300FF41' d='M4.5.79v22.42l6.56-6.57h9.29L4.5.79z'/%3E%3C/svg%3E") 6 1, auto;
+}
+
+a,
+a *,
+button,
+button *,
+summary,
+label[for],
+select,
+[data-slot='button'],
+[data-slot='button'] *,
+[data-slot='dropdown-menu-trigger'],
+[data-slot='select-trigger'],
+[data-slot='tabs-trigger'],
+[role='button'],
+[role='button'] *,
+[role='link'],
+[role='menuitem'],
+[role='tab'],
+[type='button'],
+[type='submit'],
+[type='reset'],
+[type='checkbox'],
+[type='radio'] {
+  cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%2300FF41' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='M1 12h5M18 12h5M12 6V1.04M12 23v-4.96M11.95 11.95h.1v.1h-.1z'/%3E%3C/g%3E%3C/svg%3E") 18 18, pointer;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+blockquote,
+code,
+pre,
+article,
+section,
+input:not([type='button']):not([type='submit']):not([type='reset']):not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='color']),
+textarea,
+[contenteditable='true'] {
+  cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M8.99997 11.2224L12.7778 15.0002M7.97485 20.975C6.60801 22.3419 4 22.0002 2 22.0002C3.0251 20.0002 1.65827 17.3921 3.0251 16.0253C4.39194 14.6585 6.60801 14.6585 7.97485 16.0253C9.34168 17.3921 9.34168 19.6082 7.97485 20.975ZM11.9216 15.9248L21.0587 6.05671C21.8635 5.18755 21.8375 3.83776 20.9999 3.00017C20.1624 2.16258 18.8126 2.13663 17.9434 2.94141L8.07534 12.0785C7.5654 12.5507 7.31043 12.7868 7.16173 13.0385C6.80514 13.6423 6.79079 14.3887 7.12391 15.0057C7.26283 15.2631 7.50853 15.5088 7.99995 16.0002C8.49136 16.4916 8.73707 16.7373 8.99438 16.8762C9.6114 17.2093 10.3578 17.195 10.9616 16.8384C11.2134 16.6897 11.4494 16.4347 11.9216 15.9248Z' stroke='%2300FF41' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 4 33, text;
+}
+
+:disabled,
+:disabled *,
+[aria-disabled='true'],
+[aria-disabled='true'] *,
+.cursor-not-allowed {
+  cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' fill='none' stroke='%2300FF41' stroke-width='2'/%3E%3Cline x1='6' y1='6' x2='18' y2='18' stroke='%2300FF41' stroke-width='2'/%3E%3C/svg%3E") 12 12, not-allowed;
 }

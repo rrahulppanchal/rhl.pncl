@@ -146,7 +146,7 @@ export function Sidebar() {
       <aside
         className={`
           fixed lg:sticky top-0 left-0 h-screen z-50 lg:z-auto
-          w-72 lg:w-64 flex flex-col
+          w-[21.6rem] lg:w-[19.2rem] flex flex-col
           border-r border-border bg-sidebar
           transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
@@ -269,7 +269,7 @@ export function Sidebar() {
               {['NestJS', 'Node', 'React', 'AWS', 'LangChain', 'PostgreSQL'].map((tech) => (
                 <span
                   key={tech}
-                  className="text-[10px] font-mono px-2 py-0.5 border border-border text-muted-foreground/50 hover:border-primary/40 hover:text-primary/60 transition-colors cursor-default"
+                  className="text-[10px] font-mono px-2 py-0.5 border border-border text-muted-foreground/50 hover:border-primary/40 hover:text-primary/60 transition-colors cursor"
                 >
                   {tech}
                 </span>

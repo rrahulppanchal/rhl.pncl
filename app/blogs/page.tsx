@@ -1,6 +1,27 @@
+import type { Metadata } from 'next';
 import { readDB } from '@/lib/db';
 import { Sidebar } from '@/components/sidebar';
 import { BlogsList } from '@/components/blogs-list';
+
+export const metadata: Metadata = {
+  title: 'Blog — Web Dev, System Design & AI Notes',
+  description:
+    'Articles on Node.js, NestJS, system design, AI integration with LangChain & RAG, and full-stack engineering best practices by Rahul Panchal.',
+  alternates: { canonical: '/blogs' },
+  openGraph: {
+    type: 'website',
+    url: '/blogs',
+    title: 'Blog — Rahul Panchal',
+    description:
+      'Articles on Node.js, NestJS, system design, AI integration with LangChain & RAG, and full-stack engineering best practices.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog — Rahul Panchal',
+    description:
+      'Articles on Node.js, NestJS, system design, AI integration, and full-stack engineering best practices.',
+  },
+};
 
 export default function BlogsPage() {
   const db = readDB();

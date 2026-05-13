@@ -1,7 +1,9 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { readProjectsDB } from '@/lib/db';
 import { Sidebar } from '@/components/sidebar';
+import { SITE_URL } from '@/lib/site';
 import type { Project } from '@/types/project';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -13,12 +15,34 @@ export async function generateStaticParams() {
     .map(p => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const db = readProjectsDB();
   const project = db.projects.find(p => p.slug === slug);
   if (!project) return {};
-  return { title: `${project.name} — Rahul Panchal`, description: project.description };
+
+  const url = `${SITE_URL}/projects/${project.slug}`;
+
+  return {
+    title: project.name,
+    description: project.description,
+    keywords: project.tech,
+    alternates: { canonical: `/projects/${project.slug}` },
+    openGraph: {
+      type: 'article',
+      url,
+      title: project.name,
+      description: project.description,
+      siteName: 'Rahul Panchal',
+      tags: project.tech,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: project.name,
+      description: project.description,
+      creator: '@rrahulppanchal',
+    },
+  };
 }
 
 // Minimal markdown renderer (no dependencies)
@@ -108,8 +132,48 @@ export default async function ProjectPage({ params }: Props) {
   const hasLiveLink   = project.link   && project.link   !== '#';
   const hasGithubLink = project.github && project.github !== '#';
 
+  const url = `${SITE_URL}/projects/${project.slug}`;
+  const sameAs = [project.link, project.github].filter(
+    (l): l is string => !!l && l !== '#',
+  );
+
+  const projectJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.name,
+    description: project.description,
+    url,
+    keywords: project.tech.join(', '),
+    dateCreated: project.year,
+    creativeWorkStatus: project.status,
+    author: {
+      '@type': 'Person',
+      name: 'Rahul Panchal',
+      url: SITE_URL,
+    },
+    ...(sameAs.length > 0 ? { sameAs } : {}),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home',     item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: `${SITE_URL}/projects` },
+      { '@type': 'ListItem', position: 3, name: project.name, item: url },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="flex min-h-screen">
         <Sidebar />
 
@@ -150,7 +214,7 @@ export default async function ProjectPage({ params }: Props) {
               {project.tech.map(tech => (
                 <span
                   key={tech}
-                  className="text-xs px-2 py-1 border border-border text-muted-foreground font-mono hover:border-primary/50 hover:text-primary transition-all cursor-default"
+                  className="text-xs px-2 py-1 border border-border text-muted-foreground font-mono hover:border-primary/50 hover:text-primary transition-all cursor"
                 >
                   {tech}
                 </span>

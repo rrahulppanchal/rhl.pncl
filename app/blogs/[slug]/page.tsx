@@ -1,7 +1,9 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { readDB } from '@/lib/db';
 import { Sidebar } from '@/components/sidebar';
+import { SITE_URL } from '@/lib/site';
 import type { Blog } from '@/types/blog';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -13,12 +15,39 @@ export async function generateStaticParams() {
     .map(b => ({ slug: b.slug }));
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const db = readDB();
   const blog = db.blogs.find(b => b.slug === slug);
   if (!blog) return {};
-  return { title: `${blog.title} — Rahul Panchal`, description: blog.description };
+
+  const url = `${SITE_URL}/blogs/${blog.slug}`;
+  const isoDate = new Date(blog.date);
+  const publishedTime = isNaN(isoDate.getTime()) ? undefined : isoDate.toISOString();
+
+  return {
+    title: blog.title,
+    description: blog.description,
+    keywords: blog.tags,
+    alternates: { canonical: `/blogs/${blog.slug}` },
+    openGraph: {
+      type: 'article',
+      url,
+      title: blog.title,
+      description: blog.description,
+      siteName: 'Rahul Panchal',
+      publishedTime,
+      authors: ['Rahul Panchal'],
+      tags: blog.tags,
+      section: blog.category,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: blog.title,
+      description: blog.description,
+      creator: '@rrahulppanchal',
+    },
+  };
 }
 
 // Very minimal markdown renderer (no extra dependencies)
@@ -104,8 +133,53 @@ export default async function BlogPostPage({ params }: Props) {
   const prev = published[idx + 1] ?? null;
   const next = published[idx - 1] ?? null;
 
+  const url = `${SITE_URL}/blogs/${blog.slug}`;
+  const isoDate = new Date(blog.date);
+  const datePublished = isNaN(isoDate.getTime()) ? undefined : isoDate.toISOString();
+
+  const blogJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    headline: blog.title,
+    description: blog.description,
+    keywords: blog.tags.join(', '),
+    articleSection: blog.category,
+    datePublished,
+    dateModified: datePublished,
+    author: {
+      '@type': 'Person',
+      name: 'Rahul Panchal',
+      url: SITE_URL,
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Rahul Panchal',
+      url: SITE_URL,
+    },
+    url,
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home',  item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Blogs', item: `${SITE_URL}/blogs` },
+      { '@type': 'ListItem', position: 3, name: blog.title, item: url },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="flex min-h-screen">
         <Sidebar />
 
@@ -153,7 +227,7 @@ export default async function BlogPostPage({ params }: Props) {
           {blog.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-12 pt-6 border-t border-border">
               {blog.tags.map(tag => (
-                <span key={tag} className="text-xs px-2 py-1 border border-border text-muted-foreground font-mono hover:border-primary hover:text-primary transition-colors cursor-default">
+                <span key={tag} className="text-xs px-2 py-1 border border-border text-muted-foreground font-mono hover:border-primary hover:text-primary transition-colors cursor">
                   {tag}
                 </span>
               ))}

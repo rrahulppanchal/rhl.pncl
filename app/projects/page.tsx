@@ -1,7 +1,28 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { readProjectsDB } from '@/lib/db';
 import { Sidebar } from '@/components/sidebar';
 import type { Project, ProjectStatus } from '@/types/project';
+
+export const metadata: Metadata = {
+  title: 'Projects — Full-Stack, AI & Cloud Case Studies',
+  description:
+    'Selected projects by Rahul Panchal across full-stack development, AI/LLM integration, and cloud infrastructure. Tech stacks, status, and case studies.',
+  alternates: { canonical: '/projects' },
+  openGraph: {
+    type: 'website',
+    url: '/projects',
+    title: 'Projects — Rahul Panchal',
+    description:
+      'Selected projects across full-stack development, AI/LLM integration, and cloud infrastructure.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Projects — Rahul Panchal',
+    description:
+      'Selected projects across full-stack development, AI/LLM integration, and cloud infrastructure.',
+  },
+};
 
 const statusStyles: Record<ProjectStatus, { badge: string; dot: string }> = {
   'Completed':   { badge: 'text-primary border-primary/40 bg-primary/5',           dot: 'bg-primary' },
@@ -119,7 +140,7 @@ export default function ProjectsPage() {
                       {project.tech.map(tech => (
                         <span
                           key={tech}
-                          className="text-xs px-2 py-1 border border-border text-muted-foreground font-mono hover:border-primary/50 hover:text-primary hover:shadow-xs transition-all cursor-default"
+                          className="text-xs px-2 py-1 border border-border text-muted-foreground font-mono hover:border-primary/50 hover:text-primary hover:shadow-xs transition-all cursor"
                         >
                           {tech}
                         </span>
