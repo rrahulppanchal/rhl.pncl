@@ -4,7 +4,7 @@ import { Sidebar } from '@/components/sidebar';
 import { BlogsList } from '@/components/blogs-list';
 
 export const metadata: Metadata = {
-  title: 'Blog — Web Dev, System Design & AI Notes',
+  title: 'Blog — Notes on AI, Backend, DevOps & Engineering',
   description:
     'Articles on Node.js, NestJS, system design, AI integration with LangChain & RAG, and full-stack engineering best practices by Rahul Panchal.',
   alternates: { canonical: '/blogs' },

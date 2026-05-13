@@ -4,6 +4,15 @@ import { XIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { useExternalRedirect, WHATSAPP_URL } from '@/lib/use-external-redirect';
+
+function WhatsAppIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.59 5.385l.999 1.456-1.045 3.821 3.945-1.036zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+    </svg>
+  );
+}
 
 const navItems = [
   {
@@ -19,9 +28,20 @@ const navItems = [
     ),
   },
   {
+    path: '/services',
+    label: 'services',
+    num: '02',
+    desc: 'hire me · what i build',
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+      </svg>
+    ),
+  },
+  {
     path: '/projects',
     label: 'projects',
-    num: '02',
+    num: '03',
     desc: 'selected work',
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
@@ -34,7 +54,7 @@ const navItems = [
   {
     path: '/blogs',
     label: 'blogs',
-    num: '03',
+    num: '04',
     desc: 'thoughts & articles',
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
@@ -49,7 +69,7 @@ const navItems = [
   {
     path: '/contact',
     label: 'contact',
-    num: '04',
+    num: '05',
     desc: 'get in touch',
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
@@ -106,6 +126,7 @@ function XSocialIcon() {
 export function Sidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { redirect, overlay } = useExternalRedirect();
 
   useEffect(() => { setIsOpen(false); }, [pathname]);
 
@@ -124,6 +145,8 @@ export function Sidebar() {
 
   return (
     <>
+      {overlay}
+
       {/* Mobile hamburger */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -266,10 +289,10 @@ export function Sidebar() {
               Stack
             </p>
             <div className="flex flex-wrap gap-1.5">
-              {['NestJS', 'Node', 'React', 'AWS', 'LangChain', 'PostgreSQL'].map((tech) => (
+              {['NestJS', 'Node', 'Next.js', 'Python', 'FastAPI', 'LangChain', 'LangGraph', 'CrewAI', 'AWS', 'PostgreSQL', 'Docker'].map((tech) => (
                 <span
                   key={tech}
-                  className="text-[11px] font-mono px-2 py-0.5 border border-border text-muted-foreground hover:border-primary/60 hover:text-primary transition-colors"
+                  className="text-[11px] font-mono px-2 py-0.5 border border-border text-foreground/80 hover:border-primary hover:text-primary hover:bg-primary/5 transition-colors"
                 >
                   {tech}
                 </span>
@@ -280,45 +303,50 @@ export function Sidebar() {
           {/* ── Social + Footer ─────────────────────────────── */}
           <div className="px-6 py-5 border-t border-border/60">
             {/* Social row */}
-            <div className="flex items-center gap-1 mb-4">
+            <div className="grid grid-cols-5 gap-1.5 mb-4">
               {[
-                { href: 'https://github.com/rrahulppanchal', title: 'GitHub', Icon: GitHubIcon },
-                { href: 'https://in.linkedin.com/in/rrahulppanchal', title: 'LinkedIn', Icon: LinkedInIcon },
-                { href: 'https://x.com/rrahulppanchal', title: 'X / Twitter', Icon: XSocialIcon },
-              ].map(({ href, title, Icon }) => (
+                { href: 'https://github.com/rrahulppanchal',         label: 'GitHub',   Icon: GitHubIcon   },
+                { href: 'https://in.linkedin.com/in/rrahulppanchal', label: 'LinkedIn', Icon: LinkedInIcon },
+                { href: 'https://x.com/rrahulppanchal',              label: 'X',        Icon: XSocialIcon  },
+                { href: WHATSAPP_URL,                                label: 'WhatsApp', Icon: WhatsAppIcon },
+              ].map(({ href, label, Icon }) => (
                 <a
-                  key={title}
+                  key={label}
                   href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={title}
-                  className="group flex items-center justify-center w-8 h-8 border border-border text-muted-foreground/50 hover:border-primary/60 hover:text-primary hover:bg-primary/5 transition-all duration-200"
+                  rel="noopener"
+                  title={label}
+                  aria-label={label}
+                  onClick={redirect(href, label)}
+                  className="group relative flex items-center justify-center h-11 border border-border/70 text-foreground/80 hover:text-primary hover:border-primary hover:bg-primary/10 transition-all duration-200 hover:shadow-md"
                 >
                   <Icon />
+                  <span className="absolute -bottom-px left-0 h-px w-0 bg-primary group-hover:w-full transition-all duration-300" />
                 </a>
               ))}
 
-              {/* Email link */}
+              {/* Email link (mailto — bypasses loader) */}
               <a
                 href="mailto:rhl.pncl@gmail.com"
                 title="Email"
-                className="group flex items-center justify-center w-8 h-8 border border-border text-muted-foreground/50 hover:border-primary/60 hover:text-primary hover:bg-primary/5 transition-all duration-200"
+                aria-label="Email"
+                className="group relative flex items-center justify-center h-11 border border-border/70 text-foreground/80 hover:text-primary hover:border-primary hover:bg-primary/10 transition-all duration-200 hover:shadow-md"
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="square">
                   <rect x="2" y="4" width="20" height="16" />
                   <path d="m22 7-10 7L2 7" />
                 </svg>
+                <span className="absolute -bottom-px left-0 h-px w-0 bg-primary group-hover:w-full transition-all duration-300" />
               </a>
             </div>
 
             {/* Footer text */}
-            <div className="space-y-1">
-              <p className="text-[10px] text-muted-foreground/35 font-mono">
+            <div className="space-y-1.5">
+              <p className="text-[12px] text-muted-foreground font-mono">
                 © {new Date().getFullYear()} Rahul Panchal
               </p>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1 h-1 bg-primary/50 inline-block" />
-                <p className="text-[10px] text-muted-foreground/25 font-mono">online · India</p>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-primary animate-pulse inline-block rounded-full" />
+                <p className="text-[12px] text-foreground/80 font-mono">online · India</p>
               </div>
             </div>
           </div>

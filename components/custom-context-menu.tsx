@@ -7,14 +7,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 type Pos = { x: number; y: number };
 
 const ROUTES = [
-  { path: '/',         label: 'home',     desc: 'intro & overview',   shortcut: 'g h' },
-  { path: '/projects', label: 'projects', desc: 'selected work',      shortcut: 'g p' },
+  { path: '/',         label: 'home',     desc: 'intro & overview',    shortcut: 'g h' },
+  { path: '/services', label: 'services', desc: 'hire me · what i build', shortcut: 'g s' },
+  { path: '/projects', label: 'projects', desc: 'selected work',       shortcut: 'g p' },
   { path: '/blogs',    label: 'blogs',    desc: 'thoughts & articles', shortcut: 'g b' },
-  { path: '/contact',  label: 'contact',  desc: 'get in touch',       shortcut: 'g c' },
+  { path: '/contact',  label: 'contact',  desc: 'get in touch',        shortcut: 'g c' },
 ] as const;
 
-const MENU_W = 260;
-const MENU_H = 280;
+const MENU_W = 280;
+const MENU_H = 320;
 
 export function CustomContextMenu() {
   const pathname = usePathname();

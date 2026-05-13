@@ -33,7 +33,16 @@ export function writeDB(data: DB): void {
 
 export function readProjectsDB(): ProjectsDB {
   try {
-    return JSON.parse(fs.readFileSync(PROJECTS_PATH, 'utf-8')) as ProjectsDB;
+    const db = JSON.parse(fs.readFileSync(PROJECTS_PATH, 'utf-8')) as ProjectsDB;
+    // newest first by year (invalid years sink to the bottom)
+    db.projects.sort((a, b) => {
+      const ya = Number(a.year);
+      const yb = Number(b.year);
+      const na = isNaN(ya) ? -Infinity : ya;
+      const nb = isNaN(yb) ? -Infinity : yb;
+      return nb - na;
+    });
+    return db;
   } catch {
     return { projects: [] };
   }

@@ -5,7 +5,7 @@ import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { RouteLoaderOverlay } from "@/components/route-loader-overlay";
 import { CustomContextMenu } from "@/components/custom-context-menu";
 
-const SITE_TITLE = "Rahul Panchal — Senior Node.js / NestJS / AI Developer";
+const SITE_TITLE = "Rahul Panchal — Senior Software Engineer · Node.js, NestJS, Python AI";
 const SITE_DESC =
   "Senior Software Engineer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Based in India.";
 

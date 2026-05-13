@@ -130,82 +130,130 @@ export function NewsletterForm() {
           onClose={reset}
         />
       )}
+      {isSuccessTerminal && (
+        <SuccessModal
+          lines={successLines}
+          shown={shown}
+          phase={phase}
+          onClose={reset}
+        />
+      )}
 
       <div className="flex items-center gap-2 px-4 py-3 bg-card border-b border-border">
         <span className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
         <span className="w-2.5 h-2.5 rounded-full bg-amber-400/60" />
         <span className="w-2.5 h-2.5 rounded-full bg-primary/60" />
         <span className="text-xs text-muted-foreground font-mono ml-3">newsletter.sh</span>
-        {isSuccessTerminal && (
-          <button
-            type="button"
-            onClick={reset}
-            className="ml-auto text-[10px] text-muted-foreground hover:text-primary font-mono transition-colors"
-          >
-            ← subscribe another
-          </button>
-        )}
-        {!isSuccessTerminal && (
-          <span className="ml-auto text-[10px] text-muted-foreground/40 font-mono">~/portfolio</span>
-        )}
+        <span className="ml-auto text-[10px] text-muted-foreground/40 font-mono">~/portfolio</span>
       </div>
 
       <div
         key={shakeKey}
         className={`p-8 bg-card/10 ${shakeKey > 0 && isErrPhase ? 'shake-on-error' : ''}`}
       >
-        {isSuccessTerminal ? (
-          <div className="font-mono text-sm space-y-1.5 min-h-[200px]">
-            {successLines.slice(0, shown).map((line, i) => (
-              <TerminalLine key={i} line={line} />
-            ))}
-            {phase === 'sending' && shown < successLines.length && (
-              <p className="text-primary animate-pulse text-base">▋</p>
+        <p className="text-xs text-muted-foreground font-mono mb-4">
+          <span className="text-primary">$</span> subscribe --topic all --frequency weekly
+        </p>
+        <h3 className="text-xl font-bold text-foreground mb-2 font-mono">Stay in the loop</h3>
+        <p className="text-muted-foreground text-sm mb-6 max-w-lg">
+          Get the latest articles directly in your inbox. No spam, just quality content about web development and engineering.
+        </p>
+        <form onSubmit={handleSubmit} noValidate className="flex flex-col sm:flex-row gap-3 max-w-md">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="your@email.com"
+            aria-invalid={!!errorMsg}
+            className="flex-1 bg-input border border-border text-foreground px-4 py-2.5 focus:border-primary focus:border-l-2 focus:outline-none transition-all text-sm font-mono placeholder:text-muted-foreground/40"
+          />
+          <button
+            type="submit"
+            disabled={submitting}
+            className="px-6 py-2.5 bg-primary text-primary-foreground font-mono text-sm hover:opacity-90 transition-opacity whitespace-nowrap group/btn flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {submitting ? (
+              <span>Transmitting<span className="animate-[blink_1s_step-end_infinite]">...</span></span>
+            ) : (
+              <>
+                Subscribe
+                <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
+              </>
             )}
-            {phase === 'sent' && (
-              <div className="mt-6 pt-4 border-t border-border/60 text-[11px] text-muted-foreground/60 font-mono">
-                <span className="text-primary">$</span> exit 0
-                <span className="text-primary animate-[blink_1s_step-end_infinite]"> ▋</span>
-              </div>
-            )}
-          </div>
-        ) : (
-          <>
-            <p className="text-xs text-muted-foreground font-mono mb-4">
-              <span className="text-primary">$</span> subscribe --topic all --frequency weekly
-            </p>
-            <h3 className="text-xl font-bold text-foreground mb-2 font-mono">Stay in the loop</h3>
-            <p className="text-muted-foreground text-sm mb-6 max-w-lg">
-              Get the latest articles directly in your inbox. No spam, just quality content about web development and engineering.
-            </p>
-            <form onSubmit={handleSubmit} noValidate className="flex flex-col sm:flex-row gap-3 max-w-md">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                aria-invalid={!!errorMsg}
-                className="flex-1 bg-input border border-border text-foreground px-4 py-2.5 focus:border-primary focus:border-l-2 focus:outline-none transition-all text-sm font-mono placeholder:text-muted-foreground/40"
-              />
-              <button
-                type="submit"
-                disabled={submitting}
-                className="px-6 py-2.5 bg-primary text-primary-foreground font-mono text-sm hover:opacity-90 transition-opacity whitespace-nowrap group/btn flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {submitting ? (
-                  <span>Transmitting<span className="animate-[blink_1s_step-end_infinite]">...</span></span>
-                ) : (
-                  <>
-                    Subscribe
-                    <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
-                  </>
-                )}
-              </button>
-            </form>
-          </>
-        )}
+          </button>
+        </form>
       </div>
     </section>
+  );
+}
+
+function SuccessModal({
+  lines,
+  shown,
+  phase,
+  onClose,
+}: {
+  lines: Line[];
+  shown: number;
+  phase: Phase;
+  onClose: () => void;
+}) {
+  const isSending = phase === 'sending';
+  const isSent    = phase === 'sent';
+  return (
+    <div className="fixed inset-0 z-[90] flex items-center justify-center px-4 bg-black/70 backdrop-blur-sm popup-enter">
+      <div
+        role="alertdialog"
+        aria-modal="true"
+        aria-label="Subscription progress"
+        className="w-full max-w-lg border border-primary/60 bg-background"
+        style={{
+          boxShadow:
+            '0 0 0 1px hsl(135.2941 100% 50% / 0.20), 0 0 30px hsl(135.2941 100% 50% / 0.35), 0 0 60px hsl(135.2941 100% 50% / 0.15)',
+        }}
+      >
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-primary/40 bg-primary/10">
+          <span className="w-2.5 h-2.5 rounded-full bg-destructive/40" />
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-400/40" />
+          <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+          <span className="text-xs font-mono text-primary ml-3">newsletter.sh</span>
+          {isSent && (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="ml-auto text-primary/70 hover:text-primary font-mono text-xs leading-none"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        <div className="p-6 font-mono text-sm space-y-1.5 min-h-[260px] scanline">
+          {lines.slice(0, shown).map((line, i) => (
+            <TerminalLine key={i} line={line} />
+          ))}
+          {isSending && shown < lines.length && (
+            <p className="text-primary animate-pulse text-base">▋</p>
+          )}
+          {isSent && (
+            <div className="mt-6 pt-4 border-t border-primary/30 text-[11px] text-muted-foreground/70 font-mono flex items-center justify-between">
+              <span>
+                <span className="text-primary">$</span> exit 0
+                <span className="text-primary animate-[blink_1s_step-end_infinite]"> ▋</span>
+              </span>
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-[10px] font-mono text-primary hover:bg-primary/10 border border-primary/60 px-3 py-1.5 transition-colors"
+              >
+                ← subscribe another
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

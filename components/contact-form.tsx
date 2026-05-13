@@ -180,6 +180,15 @@ export function ContactForm() {
           onClose={reset}
         />
       )}
+      {/* Success modal popup */}
+      {isSuccessTerminal && (
+        <SuccessModal
+          lines={activeLines}
+          shown={shown}
+          phase={phase}
+          onClose={reset}
+        />
+      )}
 
       <div
         key={shakeKey}
@@ -189,36 +198,9 @@ export function ContactForm() {
           <span className="text-xs text-muted-foreground font-mono">
             <span className="text-primary">//</span> send_message.ts
           </span>
-          {isSuccessTerminal && (
-            <button
-              type="button"
-              onClick={reset}
-              className="ml-auto text-[10px] font-mono text-muted-foreground hover:text-primary transition-colors"
-            >
-              ← new message
-            </button>
-          )}
         </div>
 
-        {isSuccessTerminal ? (
-          /* ── Terminal success log ──────────────────────────────── */
-          <div className="font-mono text-sm space-y-1.5 scanline min-h-[420px]">
-            {activeLines.slice(0, shown).map((line, i) => (
-              <TerminalLine key={i} line={line} />
-            ))}
-            {phase === 'sending' && shown < activeLines.length && (
-              <p className="text-primary animate-pulse text-base">▋</p>
-            )}
-            {phase === 'sent' && (
-              <div className="mt-6 pt-4 border-t border-border/60 text-[11px] text-muted-foreground/60 font-mono">
-                <span className="text-primary">$</span> exit 0
-                <span className="text-primary animate-[blink_1s_step-end_infinite]"> ▋</span>
-              </div>
-            )}
-          </div>
-        ) : (
-          /* ── Form ─────────────────────────────────────────────── */
-          <form onSubmit={handleSubmit} noValidate className="space-y-5">
+        <form onSubmit={handleSubmit} noValidate className="space-y-5">
             <div>
               <label className={labelClass}>{'/* '}name{' */'}</label>
               <input
@@ -309,9 +291,78 @@ export function ContactForm() {
               )}
             </button>
           </form>
-        )}
       </div>
     </section>
+  );
+}
+
+function SuccessModal({
+  lines,
+  shown,
+  phase,
+  onClose,
+}: {
+  lines: Line[];
+  shown: number;
+  phase: Phase;
+  onClose: () => void;
+}) {
+  const isSending = phase === 'sending';
+  const isSent    = phase === 'sent';
+  return (
+    <div className="fixed inset-0 z-[90] flex items-center justify-center px-4 bg-black/70 backdrop-blur-sm popup-enter">
+      <div
+        role="alertdialog"
+        aria-modal="true"
+        aria-label="Transmission progress"
+        className="w-full max-w-lg border border-primary/60 bg-background"
+        style={{
+          boxShadow:
+            '0 0 0 1px hsl(135.2941 100% 50% / 0.20), 0 0 30px hsl(135.2941 100% 50% / 0.35), 0 0 60px hsl(135.2941 100% 50% / 0.15)',
+        }}
+      >
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-primary/40 bg-primary/10">
+          <span className="w-2.5 h-2.5 rounded-full bg-destructive/40" />
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-400/40" />
+          <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+          <span className="text-xs font-mono text-primary ml-3">send_message.sh</span>
+          {isSent && (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="ml-auto text-primary/70 hover:text-primary font-mono text-xs leading-none"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        <div className="p-6 font-mono text-sm space-y-1.5 min-h-[320px] scanline">
+          {lines.slice(0, shown).map((line, i) => (
+            <TerminalLine key={i} line={line} />
+          ))}
+          {isSending && shown < lines.length && (
+            <p className="text-primary animate-pulse text-base">▋</p>
+          )}
+          {isSent && (
+            <div className="mt-6 pt-4 border-t border-primary/30 text-[11px] text-muted-foreground/70 font-mono flex items-center justify-between">
+              <span>
+                <span className="text-primary">$</span> exit 0
+                <span className="text-primary animate-[blink_1s_step-end_infinite]"> ▋</span>
+              </span>
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-[10px] font-mono text-primary hover:bg-primary/10 border border-primary/60 px-3 py-1.5 transition-colors"
+              >
+                ← new message
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

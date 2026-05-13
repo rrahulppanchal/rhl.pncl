@@ -6,6 +6,7 @@ import { TerminalLoader } from './terminal-loader';
 
 const STATIC: Record<string, string> = {
   '/':         'HOME',
+  '/services': 'SERVICES',
   '/blogs':    'BLOGS',
   '/projects': 'PROJECTS',
   '/contact':  'CONTACT',

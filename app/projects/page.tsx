@@ -5,7 +5,7 @@ import { Sidebar } from '@/components/sidebar';
 import type { Project, ProjectStatus } from '@/types/project';
 
 export const metadata: Metadata = {
-  title: 'Projects — Full-Stack, AI & Cloud Case Studies',
+  title: 'Projects — AI, Full-Stack & Cloud Case Studies',
   description:
     'Selected projects by Rahul Panchal across full-stack development, AI/LLM integration, and cloud infrastructure. Tech stacks, status, and case studies.',
   alternates: { canonical: '/projects' },
