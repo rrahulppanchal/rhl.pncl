@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import type { Blog } from '@/types/blog';
+import { NewsletterForm } from './newsletter-form';
 
 const POSTS_PER_PAGE = 5;
 
@@ -426,38 +427,7 @@ export function BlogsList({ blogs, categories }: BlogsListProps) {
       )}
 
       {/* ── Newsletter ── */}
-      <section className="border border-border overflow-hidden mt-6">
-        <div className="flex items-center gap-2 px-4 py-3 bg-card border-b border-border">
-          <span className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-400/60" />
-          <span className="w-2.5 h-2.5 rounded-full bg-primary/60" />
-          <span className="text-xs text-muted-foreground font-mono ml-3">newsletter.sh</span>
-          <span className="ml-auto text-[10px] text-muted-foreground/40 font-mono">~/portfolio</span>
-        </div>
-        <div className="p-8 bg-card/10">
-          <p className="text-xs text-muted-foreground font-mono mb-4">
-            <span className="text-primary">$</span> subscribe --topic all --frequency weekly
-          </p>
-          <h3 className="text-xl font-bold text-foreground mb-2 font-mono">Stay in the loop</h3>
-          <p className="text-muted-foreground text-sm mb-6 max-w-lg">
-            Get the latest articles directly in your inbox. No spam, just quality content about web development and engineering.
-          </p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md" onSubmit={e => e.preventDefault()}>
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="flex-1 bg-input border border-border text-foreground px-4 py-2.5 focus:border-primary focus:border-l-2 focus:outline-none transition-all text-sm font-mono placeholder:text-muted-foreground/40"
-            />
-            <button
-              type="submit"
-              className="px-6 py-2.5 bg-primary text-primary-foreground font-mono text-sm hover:opacity-90 transition-opacity whitespace-nowrap group/btn flex items-center justify-center gap-2"
-            >
-              Subscribe
-              <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
-            </button>
-          </form>
-        </div>
-      </section>
+      <NewsletterForm />
 
     </div>
   );

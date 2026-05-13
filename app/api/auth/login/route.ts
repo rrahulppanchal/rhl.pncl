@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = 'rahul@2026';
+const ADMIN_PASSWORD = 'rahul0550';
 const ADMIN_TOKEN = 'rahul-portfolio-admin-2026';
 
 export async function POST(request: NextRequest) {

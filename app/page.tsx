@@ -6,14 +6,16 @@ import { SITE_URL } from '@/lib/site';
 
 const skills = [
   'NestJS', 'Node.js', 'TypeScript', 'React.js',
-  'Next.js', 'PostgreSQL', 'MongoDB', 'AWS',
-  'Docker', 'LangChain', 'RAG', 'OpenAI API',
-  'LangGraph', 'Redis', 'Microservices', 'n8n',
+  'Next.js', 'Python', 'FastAPI', 'PostgreSQL',
+  'MongoDB', 'AWS', 'Docker', 'LangChain',
+  'LangGraph', 'CrewAI', 'LlamaIndex', 'RAG',
+  'OpenAI API', 'Anthropic Claude', 'Hugging Face', 'pgvector',
+  'AI Agents', 'Redis', 'Microservices', 'n8n',
 ];
 
 const experiences = [
   {
-    role: 'Senior Software Developer',
+    role: 'Senior Software Engineer',
     company: 'Codzgarage Infotech Pvt Ltd',
     location: 'Ahmedabad, Gujarat',
     period: 'Mar 2023 — Present',
@@ -57,9 +59,9 @@ export default function Page() {
     name: 'Rahul Panchal',
     url: SITE_URL,
     image: `${SITE_URL}/apple-icon.png`,
-    jobTitle: 'Senior Software Developer',
+    jobTitle: 'Senior Software Engineer',
     description:
-      'Senior Software Developer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and AI-powered solutions with LangChain, RAG pipelines, and LLM APIs.',
+      'Senior Software Engineer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs.',
     worksFor: {
       '@type': 'Organization',
       name: 'Codzgarage Infotech Pvt Ltd',
@@ -103,11 +105,11 @@ export default function Page() {
             <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight font-mono glow-text glitch-hover">
               Rahul Panchal
               <br />
-              <span className="text-3xl lg:text-4xl">Senior Software Developer</span>
+              <span className="text-3xl lg:text-4xl">Senior Software Engineer</span>
               <span className="terminal-cursor" />
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-              6+ years building scalable Node.js &amp; NestJS systems, MERN stack applications, and AI-powered solutions using LangChain, RAG pipelines, and LLM APIs. Based in India.{' '}
+              6+ years building scalable Node.js &amp; NestJS systems, MERN stack applications, and Python-powered AI agents using LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Based in India.{' '}
               <span className="text-primary font-mono">Always shipping.</span>
             </p>
           </section>
@@ -119,10 +121,10 @@ export default function Page() {
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed max-w-2xl mb-8">
               <p>
-                Innovative Senior Software Developer with 6+ years of experience specializing in scalable Node.js and NestJS architectures. Expert in the MERN stack and cloud-native solutions on AWS.
+                Innovative Senior Software Engineer with 6+ years of experience specializing in scalable Node.js and NestJS architectures. Expert in the MERN stack, Python AI services, and cloud-native solutions on AWS.
               </p>
               <p>
-                I bridge robust backend engineering with intelligent AI integration — building LLM-powered applications, RAG pipelines, and autonomous AI agents. Recognized for technical leadership, successfully migrating legacy systems to modern SaaS platforms and delivering 20+ production-ready enterprise solutions.
+                I bridge robust backend engineering with intelligent AI integration — building LLM-powered applications, RAG pipelines, and autonomous AI agents in Python with LangGraph, CrewAI, and LlamaIndex. Recognized for technical leadership, successfully migrating legacy systems to modern SaaS platforms and delivering 20+ production-ready enterprise solutions.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">

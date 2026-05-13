@@ -10,7 +10,16 @@ const PROJECTS_PATH = path.join(process.cwd(), 'data', 'projects.json');
 
 export function readDB(): DB {
   try {
-    return JSON.parse(fs.readFileSync(BLOGS_PATH, 'utf-8')) as DB;
+    const db = JSON.parse(fs.readFileSync(BLOGS_PATH, 'utf-8')) as DB;
+    // newest first by date (invalid dates sink to the bottom)
+    db.blogs.sort((a, b) => {
+      const ta = new Date(a.date).getTime();
+      const tb = new Date(b.date).getTime();
+      const na = isNaN(ta) ? -Infinity : ta;
+      const nb = isNaN(tb) ? -Infinity : tb;
+      return nb - na;
+    });
+    return db;
   } catch {
     return { blogs: [] };
   }

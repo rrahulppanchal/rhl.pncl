@@ -182,7 +182,7 @@ export function Sidebar() {
                   Rahul Panchal
                 </Link>
                 <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-                  Senior Software Dev
+                  Senior Software Engineer
                 </p>
               </div>
             </div>
@@ -197,7 +197,7 @@ export function Sidebar() {
           {/* ── Navigation ──────────────────────────────────── */}
           <nav className="flex-1 px-3 py-5">
             {/* Label */}
-            <p className="px-3 mb-3 text-[10px] text-muted-foreground/40 font-mono uppercase tracking-widest">
+            <p className="px-3 mb-3 text-[11px] text-muted-foreground/80 font-mono uppercase tracking-widest">
               Navigation
             </p>
 
@@ -213,7 +213,7 @@ export function Sidebar() {
                       transition-all duration-200 overflow-hidden
                       ${active
                         ? 'text-primary bg-primary/8'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-white/3'
+                        : 'text-foreground/80 hover:text-foreground hover:bg-white/3'
                       }
                     `}
                   >
@@ -225,15 +225,15 @@ export function Sidebar() {
                     />
 
                     {/* Number */}
-                    <span className={`text-[10px] font-mono shrink-0 transition-colors w-5 ${
-                      active ? 'text-primary/60' : 'text-muted-foreground/30 group-hover:text-muted-foreground/60'
+                    <span className={`text-[11px] font-mono shrink-0 transition-colors w-5 ${
+                      active ? 'text-primary' : 'text-muted-foreground/70 group-hover:text-muted-foreground'
                     }`}>
                       {item.num}
                     </span>
 
                     {/* Icon */}
                     <span className={`shrink-0 transition-colors ${
-                      active ? 'text-primary' : 'text-muted-foreground/40 group-hover:text-muted-foreground'
+                      active ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'
                     }`}>
                       {item.icon}
                     </span>
@@ -245,11 +245,11 @@ export function Sidebar() {
                           {item.label}
                         </span>
                         {active && (
-                          <span className="text-[9px] text-primary/40 font-mono">◀</span>
+                          <span className="text-[10px] text-primary/70 font-mono">◀</span>
                         )}
                       </div>
-                      <p className={`text-[10px] mt-0.5 transition-colors truncate ${
-                        active ? 'text-primary/40' : 'text-muted-foreground/30 group-hover:text-muted-foreground/50'
+                      <p className={`text-[11px] mt-0.5 transition-colors truncate ${
+                        active ? 'text-primary/70' : 'text-muted-foreground/70 group-hover:text-muted-foreground'
                       }`}>
                         {item.desc}
                       </p>
@@ -262,14 +262,14 @@ export function Sidebar() {
 
           {/* ── Tech Stack Marquee ──────────────────────────── */}
           <div className="px-6 py-4 border-t border-border/60">
-            <p className="text-[10px] text-muted-foreground/40 font-mono uppercase tracking-widest mb-3">
+            <p className="text-[11px] text-muted-foreground/80 font-mono uppercase tracking-widest mb-3">
               Stack
             </p>
             <div className="flex flex-wrap gap-1.5">
               {['NestJS', 'Node', 'React', 'AWS', 'LangChain', 'PostgreSQL'].map((tech) => (
                 <span
                   key={tech}
-                  className="text-[10px] font-mono px-2 py-0.5 border border-border text-muted-foreground/50 hover:border-primary/40 hover:text-primary/60 transition-colors cursor"
+                  className="text-[11px] font-mono px-2 py-0.5 border border-border text-muted-foreground hover:border-primary/60 hover:text-primary transition-colors"
                 >
                   {tech}
                 </span>
