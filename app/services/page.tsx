@@ -256,10 +256,82 @@ export default function ServicesPage() {
             </div>
           </section>
 
+          {/* Impact in Numbers */}
+          <section className="mb-24">
+            <h2 className="text-2xl font-bold text-foreground mb-8 font-mono glitch-hover">
+              <span className="text-primary">02.</span> Impact in Numbers
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-2xl">
+              What clients typically see after the first wave of AI + automation ships: lower operational cost, hours reclaimed for high-leverage work, and capacity to grow without growing headcount.
+            </p>
+
+            {/* KPI cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+              <KPI value="65%" label="ops cost reduction" hint="within 12 months" />
+              <KPI value="320h" label="reclaimed monthly" hint="per automation rollout" />
+              <KPI value="3.5×" label="throughput uplift" hint="same team, more output" />
+            </div>
+
+            {/* Cost reduction chart */}
+            <div className="border border-border p-6 mb-6 corner-cut">
+              <header className="mb-4 flex items-baseline justify-between gap-3 flex-wrap">
+                <div>
+                  <h3 className="text-sm font-bold text-foreground font-mono">
+                    <span className="text-primary">//</span> operational_cost.csv
+                  </h3>
+                  <p className="text-xs text-muted-foreground/70 mt-1">
+                    Cost as % of baseline · 12-month trajectory after rollout
+                  </p>
+                </div>
+                <span className="text-[10px] text-primary/70 font-mono">↓ 65% by M12</span>
+              </header>
+              <div className="text-primary">
+                <CostChart />
+              </div>
+            </div>
+
+            {/* Hours saved chart */}
+            <div className="border border-border p-6 mb-6 corner-cut">
+              <header className="mb-4 flex items-baseline justify-between gap-3 flex-wrap">
+                <div>
+                  <h3 className="text-sm font-bold text-foreground font-mono">
+                    <span className="text-primary">//</span> hours_saved.json
+                  </h3>
+                  <p className="text-xs text-muted-foreground/70 mt-1">
+                    Team hours reclaimed per month, broken down by workflow category
+                  </p>
+                </div>
+                <span className="text-[10px] text-primary/70 font-mono">~335h/mo total</span>
+              </header>
+              <div className="text-primary">
+                <HoursChart />
+              </div>
+            </div>
+
+            {/* Manual vs Automated */}
+            <div className="border border-border p-6 corner-cut">
+              <header className="mb-4">
+                <h3 className="text-sm font-bold text-foreground font-mono">
+                  <span className="text-primary">//</span> before_vs_after.diff
+                </h3>
+                <p className="text-xs text-muted-foreground/70 mt-1">
+                  Median time to complete common ops tasks — manual vs AI-augmented
+                </p>
+              </header>
+              <div className="text-primary">
+                <CompareChart />
+              </div>
+            </div>
+
+            <p className="text-xs text-muted-foreground/60 font-mono mt-4">
+              <span className="text-primary">//</span> figures are typical outcomes from past engagements — actual results depend on scope and starting baseline.
+            </p>
+          </section>
+
           {/* Engagement Models */}
           <section className="mb-24">
             <h2 className="text-2xl font-bold text-foreground mb-8 font-mono glitch-hover">
-              <span className="text-primary">02.</span> How We Can Work Together
+              <span className="text-primary">03.</span> How We Can Work Together
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {engagementModels.map((m) => (
@@ -280,7 +352,7 @@ export default function ServicesPage() {
           {/* Process */}
           <section className="mb-24">
             <h2 className="text-2xl font-bold text-foreground mb-8 font-mono glitch-hover">
-              <span className="text-primary">03.</span> Process
+              <span className="text-primary">04.</span> Process
             </h2>
             <div className="relative">
               <div className="absolute left-0 top-2 bottom-2 w-px bg-border" />
@@ -306,7 +378,7 @@ export default function ServicesPage() {
           {/* Who I Work With */}
           <section className="mb-24">
             <h2 className="text-2xl font-bold text-foreground mb-8 font-mono glitch-hover">
-              <span className="text-primary">04.</span> Who I Work Best With
+              <span className="text-primary">05.</span> Who I Work Best With
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border">
               {[
@@ -366,5 +438,145 @@ export default function ServicesPage() {
         </main>
       </div>
     </div>
+  );
+}
+
+/* ─── Impact section helpers ─────────────────────────────── */
+
+function KPI({ value, label, hint }: { value: string; label: string; hint: string }) {
+  return (
+    <div className="border border-border p-5 corner-cut bg-card/20">
+      <p className="text-3xl font-bold text-primary font-mono glow-text leading-none">{value}</p>
+      <p className="text-sm text-foreground font-mono mt-3">{label}</p>
+      <p className="text-[11px] text-muted-foreground/60 font-mono mt-1">{hint}</p>
+    </div>
+  );
+}
+
+const COST_DATA = [100, 92, 84, 75, 67, 58, 52, 48, 43, 40, 37, 35];
+
+function CostChart() {
+  const W = 600;
+  const H = 220;
+  const padX = 44;
+  const padY = 20;
+  const innerW = W - padX - 12;
+  const innerH = H - padY - 30;
+  const points = COST_DATA.map((v, i) => {
+    const x = padX + (i / (COST_DATA.length - 1)) * innerW;
+    const y = padY + ((100 - v) / 100) * innerH;
+    return { x, y, v };
+  });
+  const polyline = points.map(p => `${p.x},${p.y}`).join(' ');
+  const areaPath = `M ${points[0].x} ${padY + innerH} ${points.map(p => `L ${p.x} ${p.y}`).join(' ')} L ${points[points.length - 1].x} ${padY + innerH} Z`;
+  const yTicks = [0, 25, 50, 75, 100];
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+      {yTicks.map(t => {
+        const y = padY + ((100 - t) / 100) * innerH;
+        return (
+          <g key={t}>
+            <line x1={padX} x2={W - 12} y1={y} y2={y} stroke="currentColor" strokeOpacity="0.12" strokeWidth="1" />
+            <text x={padX - 6} y={y + 4} textAnchor="end" fontSize="10" fill="currentColor" opacity="0.55">{t}%</text>
+          </g>
+        );
+      })}
+      <path d={areaPath} fill="currentColor" fillOpacity="0.12" />
+      <polyline points={polyline} fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+      {points.map((p, i) => (
+        <g key={i}>
+          <circle cx={p.x} cy={p.y} r="3" fill="currentColor" />
+          {i % 2 === 0 && (
+            <text x={p.x} y={H - 8} textAnchor="middle" fontSize="10" fill="currentColor" opacity="0.55">M{i + 1}</text>
+          )}
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+const HOURS_DATA = [
+  { label: 'Support',    hours: 95 },
+  { label: 'Reporting',  hours: 72 },
+  { label: 'Data Entry', hours: 64 },
+  { label: 'Scheduling', hours: 48 },
+  { label: 'Comms',      hours: 56 },
+];
+
+function HoursChart() {
+  const W = 600;
+  const H = 220;
+  const padX = 30;
+  const padTop = 24;
+  const padBottom = 36;
+  const innerW = W - padX * 2;
+  const innerH = H - padTop - padBottom;
+  const max = 100;
+  const slot = innerW / HOURS_DATA.length;
+  const barW = slot * 0.55;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+      <line x1={padX} x2={W - padX} y1={padTop + innerH} y2={padTop + innerH} stroke="currentColor" strokeOpacity="0.2" strokeWidth="1" />
+      {HOURS_DATA.map((d, i) => {
+        const barH = (d.hours / max) * innerH;
+        const x = padX + i * slot + (slot - barW) / 2;
+        const y = padTop + innerH - barH;
+        return (
+          <g key={d.label}>
+            <rect x={x} y={y} width={barW} height={barH} fill="currentColor" fillOpacity="0.78" />
+            <rect x={x} y={y} width={barW} height="2" fill="currentColor" />
+            <text x={x + barW / 2} y={y - 6} textAnchor="middle" fontSize="11" fontWeight="600" fill="currentColor">{d.hours}h</text>
+            <text x={x + barW / 2} y={H - 12} textAnchor="middle" fontSize="10" fill="currentColor" opacity="0.6">{d.label}</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+const COMPARE_DATA = [
+  { label: 'Ticket triage',  manual: 18, auto: 3 },
+  { label: 'Report build',   manual: 240, auto: 12 },
+  { label: 'Lead enrichment',manual: 9, auto: 1 },
+  { label: 'Invoice intake', manual: 14, auto: 2 },
+];
+
+function CompareChart() {
+  const W = 600;
+  const H = 260;
+  const padX = 130;
+  const padTop = 18;
+  const padBottom = 30;
+  const innerW = W - padX - 24;
+  const innerH = H - padTop - padBottom;
+  const rowH = innerH / COMPARE_DATA.length;
+  const max = Math.max(...COMPARE_DATA.map(d => d.manual));
+  const barH = rowH * 0.32;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+      {COMPARE_DATA.map((d, i) => {
+        const yBase = padTop + i * rowH + rowH / 2;
+        const manualW = (d.manual / max) * innerW;
+        const autoW = (d.auto / max) * innerW;
+        return (
+          <g key={d.label}>
+            <text x={padX - 10} y={yBase + 4} textAnchor="end" fontSize="11" fill="currentColor" opacity="0.85">{d.label}</text>
+            <rect x={padX} y={yBase - barH - 2} width={manualW} height={barH} fill="currentColor" fillOpacity="0.25" />
+            <text x={padX + manualW + 6} y={yBase - 4} fontSize="10" fill="currentColor" opacity="0.65">{d.manual}m manual</text>
+            <rect x={padX} y={yBase + 2} width={autoW} height={barH} fill="currentColor" fillOpacity="0.9" />
+            <text x={padX + autoW + 6} y={yBase + barH} fontSize="10" fontWeight="600" fill="currentColor">{d.auto}m auto</text>
+          </g>
+        );
+      })}
+      <g>
+        <rect x={padX} y={H - 14} width="10" height="6" fill="currentColor" fillOpacity="0.25" />
+        <text x={padX + 14} y={H - 8} fontSize="10" fill="currentColor" opacity="0.65">manual</text>
+        <rect x={padX + 70} y={H - 14} width="10" height="6" fill="currentColor" fillOpacity="0.9" />
+        <text x={padX + 84} y={H - 8} fontSize="10" fontWeight="600" fill="currentColor">automated</text>
+      </g>
+    </svg>
   );
 }

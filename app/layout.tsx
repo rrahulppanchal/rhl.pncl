@@ -5,9 +5,9 @@ import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { RouteLoaderOverlay } from "@/components/route-loader-overlay";
 import { CustomContextMenu } from "@/components/custom-context-menu";
 
-const SITE_TITLE = "Rahul Panchal — Senior Software Engineer & Automation Consultant · Node.js, NestJS, Python AI";
+const SITE_TITLE = "Rahul Panchal — Senior Software Engineer & Automation Consultant · AI · NestJS · Cloud";
 const SITE_DESC =
-  "Senior Software Engineer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Now working independently with businesses to design automation that cuts costs, eliminates repetitive work, and unlocks growth. Based in India.";
+  "6+ years building scalable Node.js & NestJS systems, MERN apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Now partnering with businesses to ship automation that cuts costs, kills repetitive work, and unlocks growth. 20+ production builds · ~65% avg ops cost cut. India · Remote.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

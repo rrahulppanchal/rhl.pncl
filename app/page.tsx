@@ -72,7 +72,7 @@ export default function Page() {
     image: `${SITE_URL}/apple-icon.png`,
     jobTitle: 'Senior Software Engineer · Independent Automation Consultant',
     description:
-      'Senior Software Engineer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Now working independently with businesses to design automation that cuts costs and eliminates repetitive work.',
+      '6+ years building scalable Node.js & NestJS systems, MERN apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Now partnering with businesses to ship automation that cuts costs, kills repetitive work, and unlocks growth. 20+ production builds, ~65% average ops cost reduction.',
     worksFor: {
       '@type': 'Organization',
       name: 'Self-Employed',
@@ -109,24 +109,84 @@ export default function Page() {
 
           {/* Hero Section */}
           <section className="mb-24 scanline">
-            <p className="text-muted-foreground text-sm mb-6 font-mono flex items-center gap-2">
-              <span className="text-primary animate-[blink_1s_step-end_infinite]">▋</span>
-              <span>initializing portfolio...</span>
-            </p>
-            <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight font-mono glow-text glitch-hover">
-              Rahul Panchal
-              <br />
-              <span className="text-3xl lg:text-4xl">
-                Senior Software Engineer
-                <br />
-                <span className="text-primary">&amp; Automation Consultant</span>
+            {/* Top strip: command prompt + status pill */}
+            <div className="flex flex-wrap items-center gap-3 mb-10">
+              <p className="text-muted-foreground text-xs font-mono flex items-center gap-2">
+                <span className="text-primary animate-[blink_1s_step-end_infinite]">▋</span>
+                <span>./portfolio --boot</span>
+              </p>
+              <span className="text-muted-foreground/30 font-mono">·</span>
+              <span className="inline-flex items-center gap-2 text-xs font-mono text-primary/80 border border-primary/25 bg-primary/5 px-3 py-1">
+                <span className="w-1.5 h-1.5 bg-primary animate-pulse rounded-full" />
+                available for work
               </span>
-              <span className="terminal-cursor" />
+              <span className="text-muted-foreground/30 font-mono">·</span>
+              <span className="text-xs font-mono text-muted-foreground">India · Remote</span>
+            </div>
+
+            {/* Name */}
+            <h1 className="text-5xl lg:text-7xl font-bold text-foreground mb-4 leading-[1.05] font-mono glow-text glitch-hover tracking-tight">
+              Rahul Panchal
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-              6+ years building scalable Node.js &amp; NestJS systems, MERN stack applications, and Python-powered AI agents using LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Now working independently with businesses — designing automation that cuts costs, eliminates repetitive work, and unlocks growth. Based in India.{' '}
-              <span className="text-primary font-mono">Always shipping.</span>
+
+            {/* Role lines */}
+            <div className="mb-8 space-y-1 font-mono">
+              <p className="text-2xl lg:text-3xl text-foreground/90 font-semibold leading-tight">
+                Senior Software Engineer
+              </p>
+              <p className="text-2xl lg:text-3xl text-primary font-semibold leading-tight flex items-center gap-3">
+                <span>&amp; Automation Consultant</span>
+                <span className="terminal-cursor inline-block" style={{ verticalAlign: 'middle' }} />
+              </p>
+            </div>
+
+            {/* Tagline */}
+            <p className="text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl mb-8">
+              6+ years building scalable Node.js &amp; NestJS systems, MERN apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs.
+              <br />
+              <span className="text-foreground/80">
+                Now partnering with businesses to ship automation that cuts costs, kills repetitive work, and unlocks growth.
+              </span>
             </p>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-3 mb-12">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-3 font-mono text-sm font-semibold hover:opacity-90 transition-opacity group"
+              >
+                Start a project
+                <span className="transition-transform group-hover:translate-x-1">→</span>
+              </Link>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 border border-border text-foreground px-5 py-3 font-mono text-sm hover:border-primary hover:text-primary transition-colors group"
+              >
+                <span className="text-primary">$</span>
+                <span>view work</span>
+                <span className="transition-transform group-hover:translate-x-1">→</span>
+              </Link>
+              <Link
+                href="/services"
+                className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary px-2 py-3 font-mono text-sm transition-colors"
+              >
+                services →
+              </Link>
+            </div>
+
+            {/* Stat strip */}
+            <div className="grid grid-cols-3 gap-px bg-border/60 border border-border/60">
+              {[
+                { v: '6+',   l: 'years shipping' },
+                { v: '20+',  l: 'production builds' },
+                { v: '~65%', l: 'avg ops cost cut' },
+              ].map((s) => (
+                <div key={s.l} className="bg-background px-4 py-4 flex flex-col">
+                  <span className="text-2xl lg:text-3xl font-bold text-primary font-mono glow-text leading-none">{s.v}</span>
+                  <span className="text-[11px] text-muted-foreground font-mono mt-2 uppercase tracking-wider">{s.l}</span>
+                </div>
+              ))}
+            </div>
           </section>
 
           {/* About Section */}
