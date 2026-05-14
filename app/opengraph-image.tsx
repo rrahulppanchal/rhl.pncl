@@ -9,6 +9,7 @@ export default async function OG() {
   const bg = '#000000';
   const fg = '#DCFCE7';
   const dim = '#86EFAC';
+  const dimSoft = 'rgba(134, 239, 172, 0.35)';
   const primary = '#00FF41';
 
   return new ImageResponse(
@@ -22,22 +23,22 @@ export default async function OG() {
           background: bg,
           color: fg,
           fontFamily: 'monospace',
-          padding: '64px 80px',
+          padding: '56px 72px 48px',
           position: 'relative',
         }}
       >
         {/* Top chrome */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 56 }}>
-          <div style={{ width: 14, height: 14, borderRadius: 7, background: '#ef4444' }} />
-          <div style={{ width: 14, height: 14, borderRadius: 7, background: '#facc15' }} />
-          <div style={{ width: 14, height: 14, borderRadius: 7, background: primary }} />
-          <span style={{ color: dim, fontSize: 22, marginLeft: 20 }}>boot.sh — portfolio</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 28 }}>
+          <div style={{ width: 12, height: 12, borderRadius: 6, background: '#ef4444' }} />
+          <div style={{ width: 12, height: 12, borderRadius: 6, background: '#facc15' }} />
+          <div style={{ width: 12, height: 12, borderRadius: 6, background: primary }} />
+          <span style={{ color: dim, fontSize: 20, marginLeft: 16 }}>boot.sh — portfolio</span>
         </div>
 
         {/* Command line */}
-        <div style={{ display: 'flex', color: dim, fontSize: 28, marginBottom: 28 }}>
+        <div style={{ display: 'flex', color: dim, fontSize: 22, marginBottom: 24 }}>
           <span style={{ color: primary }}>$</span>
-          <span style={{ marginLeft: 16 }}>whoami --verbose</span>
+          <span style={{ marginLeft: 12 }}>whoami --verbose</span>
         </div>
 
         {/* Name */}
@@ -45,11 +46,11 @@ export default async function OG() {
           style={{
             display: 'flex',
             color: primary,
-            fontSize: 110,
+            fontSize: 108,
             fontWeight: 800,
-            lineHeight: 1.05,
-            marginBottom: 16,
-            letterSpacing: '-1px',
+            lineHeight: 1.0,
+            marginBottom: 18,
+            letterSpacing: '-2px',
           }}
         >
           Rahul Panchal
@@ -60,14 +61,13 @@ export default async function OG() {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            color: fg,
-            fontSize: 44,
+            fontSize: 38,
             fontWeight: 700,
             lineHeight: 1.15,
-            marginBottom: 28,
+            marginBottom: 22,
           }}
         >
-          <span>Senior Software Engineer</span>
+          <span style={{ color: fg }}>Senior Software Engineer</span>
           <span style={{ color: primary }}>&amp; Automation Consultant</span>
         </div>
 
@@ -76,7 +76,7 @@ export default async function OG() {
           style={{
             display: 'flex',
             color: dim,
-            fontSize: 26,
+            fontSize: 22,
             lineHeight: 1.4,
             maxWidth: 980,
           }}
@@ -84,42 +84,53 @@ export default async function OG() {
           AI agents · Automation · Cloud engineering · Node.js · NestJS · Python — partnering with businesses to cut costs and unlock growth.
         </div>
 
-        {/* Stat strip */}
-        <div
-          style={{
-            display: 'flex',
-            gap: 32,
-            marginTop: 32,
-            color: dim,
-            fontSize: 22,
-          }}
-        >
-          <span><span style={{ color: primary, fontWeight: 700 }}>6+</span> years</span>
-          <span style={{ color: dim }}>·</span>
-          <span><span style={{ color: primary, fontWeight: 700 }}>20+</span> production builds</span>
-          <span style={{ color: dim }}>·</span>
-          <span><span style={{ color: primary, fontWeight: 700 }}>~65%</span> ops cost cut</span>
-        </div>
+        {/* Flex spacer */}
+        <div style={{ display: 'flex', flex: 1 }} />
 
-        {/* Bottom strip */}
+        {/* Divider */}
+        <div style={{ display: 'flex', height: 1, background: dimSoft, marginBottom: 18 }} />
+
+        {/* Bottom: stats + brand */}
         <div
           style={{
-            position: 'absolute',
-            left: 80,
-            right: 80,
-            bottom: 60,
             display: 'flex',
             justifyContent: 'space-between',
+            alignItems: 'center',
             color: dim,
-            fontSize: 22,
-            borderTop: `1px solid ${dim}`,
-            paddingTop: 24,
+            fontSize: 18,
           }}
         >
-          <span>
-            <span style={{ color: primary }}>▮</span> rhl.pncl
-          </span>
-          <span>India · available for work</span>
+          {/* Stats row */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+              <span style={{ color: primary, fontSize: 24, fontWeight: 700 }}>6+</span>
+              <span>years</span>
+            </div>
+            <span style={{ color: dimSoft }}>·</span>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+              <span style={{ color: primary, fontSize: 24, fontWeight: 700 }}>20+</span>
+              <span>builds</span>
+            </div>
+            <span style={{ color: dimSoft }}>·</span>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+              <span style={{ color: primary, fontSize: 24, fontWeight: 700 }}>~65%</span>
+              <span>cost cut</span>
+            </div>
+          </div>
+
+          {/* Brand pill */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span
+              style={{
+                display: 'flex',
+                width: 10,
+                height: 10,
+                background: primary,
+                borderRadius: 5,
+              }}
+            />
+            <span>India · available for work</span>
+          </div>
         </div>
 
         {/* Corner accent */}
@@ -128,8 +139,8 @@ export default async function OG() {
             position: 'absolute',
             top: 0,
             right: 0,
-            width: 40,
-            height: 40,
+            width: 36,
+            height: 36,
             background: primary,
             clipPath: 'polygon(100% 0, 0 0, 100% 100%)',
           }}
