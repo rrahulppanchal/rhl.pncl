@@ -201,7 +201,7 @@ export function HomeContactForm() {
         </div>
 
         <div className="p-8">
-          <form onSubmit={handleSubmit} noValidate className="space-y-4">
+          <form onSubmit={handleSubmit} noValidate autoComplete="off" className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs text-muted-foreground mb-2 font-mono">
@@ -213,6 +213,7 @@ export function HomeContactForm() {
                     value={form.name}
                     onChange={handleChange}
                     placeholder="Your name"
+                    autoComplete="off"
                     aria-invalid={!!errors.name}
                     className={fieldCls('name')}
                   />
@@ -228,6 +229,7 @@ export function HomeContactForm() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="your@email.com"
+                    autoComplete="off"
                     aria-invalid={!!errors.email}
                     className={fieldCls('email')}
                   />
@@ -245,6 +247,7 @@ export function HomeContactForm() {
                   onChange={handleChange}
                   rows={5}
                   placeholder="Tell me about your project or idea..."
+                  autoComplete="off"
                   aria-invalid={!!errors.message}
                   className={`${fieldCls('message')} resize-none`}
                 />

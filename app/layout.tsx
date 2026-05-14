@@ -27,6 +27,23 @@ export const metadata: Metadata = {
     "Independent Automation Engineer",
     "Business Automation",
     "AI Automation",
+    "Cloud Engineering",
+    "Cloud Infrastructure",
+    "Cloud Architect",
+    "DevOps",
+    "Infrastructure as Code",
+    "Terraform",
+    "Kubernetes",
+    "Serverless",
+    "CI/CD",
+    "System Design",
+    "Distributed Systems",
+    "Event-Driven Architecture",
+    "Microservices Architecture",
+    "Scalability",
+    "Observability",
+    "Performance Engineering",
+    "API Design",
     "NestJS Developer",
     "Node.js Developer",
     "MERN Stack",
@@ -98,6 +115,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('rhl.theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();`,
+          }}
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:wght@400;600&display=swap"
+        />
+      </head>
       <body className="antialiased">
         <RouteLoaderOverlay />
         <CustomContextMenu />

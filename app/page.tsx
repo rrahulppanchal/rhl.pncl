@@ -7,10 +7,14 @@ import { SITE_URL } from '@/lib/site';
 const skills = [
   'NestJS', 'Node.js', 'TypeScript', 'React.js',
   'Next.js', 'Python', 'FastAPI', 'PostgreSQL',
-  'MongoDB', 'AWS', 'Docker', 'LangChain',
-  'LangGraph', 'CrewAI', 'LlamaIndex', 'RAG',
-  'OpenAI API', 'Anthropic Claude', 'Hugging Face', 'pgvector',
-  'AI Agents', 'Redis', 'Microservices', 'n8n',
+  'MongoDB', 'AWS', 'Docker', 'Kubernetes',
+  'Terraform', 'Serverless', 'CI/CD', 'GitHub Actions',
+  'Cloud Infrastructure', 'Cloud Engineering', 'Infrastructure as Code', 'DevOps',
+  'System Design', 'Distributed Systems', 'Event-Driven Architecture', 'Microservices',
+  'API Design', 'Observability', 'Performance Engineering', 'Scalability',
+  'LangChain', 'LangGraph', 'CrewAI', 'LlamaIndex',
+  'RAG', 'OpenAI API', 'Anthropic Claude', 'Hugging Face',
+  'pgvector', 'AI Agents', 'Redis', 'n8n',
 ];
 
 const experiences = [
@@ -132,10 +136,10 @@ export default function Page() {
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed max-w-2xl mb-8">
               <p>
-                Innovative Senior Software Engineer with 6+ years of experience specializing in scalable Node.js and NestJS architectures. Expert in the MERN stack, Python AI services, and cloud-native solutions on AWS. Now operating independently as an automation consultant — partnering directly with businesses to ship systems that cut operational costs and eliminate the repetitive work that drains teams.
+                Innovative Senior Software Engineer with 6+ years of experience specializing in scalable Node.js and NestJS architectures, distributed systems, and event-driven microservices. Expert in the MERN stack, Python AI services, and cloud-native engineering on AWS — designing resilient cloud infrastructure with Kubernetes, Terraform, serverless functions, and full CI/CD pipelines. Now operating independently as an automation consultant — partnering directly with businesses to ship systems that cut operational costs and eliminate the repetitive work that drains teams.
               </p>
               <p>
-                I bridge robust backend engineering with intelligent AI integration — building LLM-powered applications, RAG pipelines, and autonomous AI agents in Python with LangGraph, CrewAI, and LlamaIndex. Recognized for technical leadership, successfully migrating legacy systems to modern SaaS platforms and delivering 20+ production-ready enterprise solutions. Focused now on translating that engineering depth into measurable business outcomes — faster workflows, lower headcount strain, more time for the work that actually moves revenue.
+                I bridge robust backend engineering with intelligent AI integration and production-grade cloud engineering — building LLM-powered applications, RAG pipelines, and autonomous AI agents in Python with LangGraph, CrewAI, and LlamaIndex on top of observable, infrastructure-as-code-driven deployments. Recognized for technical leadership, successfully migrating legacy systems to modern SaaS platforms and delivering 20+ production-ready enterprise solutions. Focused now on translating that engineering depth — system design, scalability, performance, observability — into measurable business outcomes: faster workflows, lower headcount strain, more time for the work that actually moves revenue.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">

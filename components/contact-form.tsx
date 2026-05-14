@@ -212,7 +212,7 @@ export function ContactForm() {
           </span>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-5">
+        <form onSubmit={handleSubmit} noValidate autoComplete="off" className="space-y-5">
             <div>
               <label className={labelClass}>{'/* '}name{' */'}</label>
               <input
@@ -221,6 +221,7 @@ export function ContactForm() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Your name"
+                autoComplete="off"
                 aria-invalid={!!errors.name}
                 className={fieldCls('name')}
               />
@@ -235,6 +236,7 @@ export function ContactForm() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="your@email.com"
+                autoComplete="off"
                 aria-invalid={!!errors.email}
                 className={fieldCls('email')}
               />
@@ -249,6 +251,7 @@ export function ContactForm() {
                 value={formData.subject}
                 onChange={handleChange}
                 placeholder="What's this about?"
+                autoComplete="off"
                 aria-invalid={!!errors.subject}
                 className={fieldCls('subject')}
               />
@@ -280,6 +283,7 @@ export function ContactForm() {
                 onChange={handleChange}
                 rows={6}
                 placeholder="Tell me more about your inquiry..."
+                autoComplete="off"
                 aria-invalid={!!errors.message}
                 className={`${fieldCls('message')} resize-none`}
               />

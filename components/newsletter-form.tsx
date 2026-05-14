@@ -171,12 +171,13 @@ export function NewsletterForm() {
         <p className="text-muted-foreground text-sm mb-6 max-w-lg">
           Get the latest articles directly in your inbox. No spam, just quality content about web development and engineering.
         </p>
-        <form onSubmit={handleSubmit} noValidate className="flex flex-col sm:flex-row gap-3 max-w-md">
+        <form onSubmit={handleSubmit} noValidate autoComplete="off" className="flex flex-col sm:flex-row gap-3 max-w-md">
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="your@email.com"
+            autoComplete="off"
             aria-invalid={!!errorMsg}
             className="flex-1 bg-input border border-border text-foreground px-4 py-2.5 focus:border-primary focus:border-l-2 focus:outline-none transition-all text-sm font-mono placeholder:text-muted-foreground/40"
           />

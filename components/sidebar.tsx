@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useExternalRedirect, WHATSAPP_URL } from '@/lib/use-external-redirect';
+import { ThemeToggle } from './theme-toggle';
 
 function WhatsAppIcon() {
   return (
@@ -286,22 +287,8 @@ export function Sidebar() {
             </div>
           </nav>
 
-          {/* ── Tech Stack Marquee ──────────────────────────── */}
-          <div className="px-6 py-4 border-t border-border/60">
-            <p className="text-[11px] text-muted-foreground/80 font-mono uppercase tracking-widest mb-3">
-              Stack
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {['NestJS', 'Node', 'Next.js', 'Python', 'FastAPI', 'LangChain', 'LangGraph', 'CrewAI', 'AWS', 'PostgreSQL', 'Docker'].map((tech) => (
-                <span
-                  key={tech}
-                  className="text-[11px] font-mono px-2 py-0.5 border border-border text-foreground/80 hover:border-primary hover:text-primary hover:bg-primary/5 transition-colors"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
+          {/* ── Theme Toggle ────────────────────────────────── */}
+          <ThemeToggle />
 
           {/* ── Social + Footer ─────────────────────────────── */}
           <div className="px-6 py-5 border-t border-border/60">
