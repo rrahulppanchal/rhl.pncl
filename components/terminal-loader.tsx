@@ -13,7 +13,74 @@ const DEFAULT_LINES = [
   '> verifying integrity...............OK',
 ];
 
-export function TerminalLoader({ pageName, bootLines = DEFAULT_LINES }: Props) {
+const BOOT_LINES_BY_PAGE: Record<string, string[]> = {
+  HOME: [
+    '$ home.init --profile=rahul',
+    '> mounting /home/portfolio..........OK',
+    '> loading hero shaders..............OK',
+    '> resolving social links............OK',
+    '> warming up service cache..........OK',
+    '> ready to greet visitor............OK',
+  ],
+  SERVICES: [
+    '$ services.list --available',
+    '> querying capability matrix........OK',
+    '> loading service catalog...........OK',
+    '> indexing tech stacks..............OK',
+    '> pricing engine online.............OK',
+    '> ready for engagement..............OK',
+  ],
+  BLOGS: [
+    '$ blogs.fetch --feed=latest',
+    '> opening content store.............OK',
+    '> sorting by published date.........OK',
+    '> computing read time...............OK',
+    '> rendering post grid...............OK',
+    '> feed ready........................OK',
+  ],
+  PROJECTS: [
+    '$ projects.scan --type=all',
+    '> enumerating repositories..........OK',
+    '> loading case studies..............OK',
+    '> resolving cover art...............OK',
+    '> tagging by stack..................OK',
+    '> portfolio ready...................OK',
+  ],
+  CONTACT: [
+    '$ contact.open --channel=secure',
+    '> binding smtp relay................OK',
+    '> warming whatsapp uplink...........OK',
+    '> mounting inbox....................OK',
+    '> spam shield armed.................OK',
+    '> ready to receive message..........OK',
+  ],
+  ADMIN: [
+    '$ admin.boot --secure',
+    '> verifying session token...........OK',
+    '> mounting control plane............OK',
+    '> loading dashboards................OK',
+    '> auditing permissions..............OK',
+    '> admin portal ready................OK',
+  ],
+  'BLOG POST': [
+    '$ fetch --resource=blog',
+    '> resolving slug....................OK',
+    '> loading markdown..................OK',
+    '> parsing syntax tree...............OK',
+    '> hydrating content.................OK',
+  ],
+  PROJECT: [
+    '$ fetch --resource=project',
+    '> resolving slug....................OK',
+    '> loading case study................OK',
+    '> compiling tech stack..............OK',
+    '> hydrating content.................OK',
+  ],
+};
+
+export function TerminalLoader({ pageName, bootLines }: Props) {
+  const lines =
+    bootLines ?? BOOT_LINES_BY_PAGE[pageName.toUpperCase()] ?? DEFAULT_LINES;
   return (
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center px-6">
       <div className="w-full max-w-2xl border border-border bg-card/30 corner-cut shadow-md">
@@ -30,7 +97,7 @@ export function TerminalLoader({ pageName, bootLines = DEFAULT_LINES }: Props) {
 
         {/* Body */}
         <div className="p-6 font-mono text-sm space-y-1.5 scanline">
-          {bootLines.map((line, i) => (
+          {lines.map((line, i) => (
             <p
               key={i}
               className="text-muted-foreground opacity-0"
@@ -50,7 +117,7 @@ export function TerminalLoader({ pageName, bootLines = DEFAULT_LINES }: Props) {
             className="opacity-0 mt-5 text-base"
             style={{
               animation: 'fadeInUp 0.4s ease forwards',
-              animationDelay: `${bootLines.length * 0.18 + 0.1}s`,
+              animationDelay: `${lines.length * 0.18 + 0.1}s`,
             }}
           >
             <span className="text-primary/60">{'>'}</span>{' '}

@@ -5,9 +5,9 @@ import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { RouteLoaderOverlay } from "@/components/route-loader-overlay";
 import { CustomContextMenu } from "@/components/custom-context-menu";
 
-const SITE_TITLE = "Rahul Panchal — Senior Software Engineer · Node.js, NestJS, Python AI";
+const SITE_TITLE = "Rahul Panchal — Senior Software Engineer & Automation Consultant · Node.js, NestJS, Python AI";
 const SITE_DESC =
-  "Senior Software Engineer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Based in India.";
+  "Senior Software Engineer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Now working independently with businesses to design automation that cuts costs, eliminates repetitive work, and unlocks growth. Based in India.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -23,6 +23,10 @@ export const metadata: Metadata = {
   keywords: [
     "Rahul Panchal",
     "Senior Software Engineer",
+    "Automation Consultant",
+    "Independent Automation Engineer",
+    "Business Automation",
+    "AI Automation",
     "NestJS Developer",
     "Node.js Developer",
     "MERN Stack",
@@ -38,6 +42,8 @@ export const metadata: Metadata = {
     "AI Agents",
     "RAG",
     "LLM",
+    "Workflow Automation",
+    "n8n",
     "Full Stack Engineer India",
   ],
   alternates: { canonical: "/" },

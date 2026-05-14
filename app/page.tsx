@@ -15,10 +15,17 @@ const skills = [
 
 const experiences = [
   {
+    role: 'Independent Automation Engineer',
+    company: 'Self-Employed',
+    location: 'Remote · India',
+    period: 'May 2026 — Present',
+    desc: 'Partnering directly with businesses to design and ship automation systems — AI agents, workflow pipelines, and integrations that cut operational costs, eliminate repetitive work, and free teams to focus on growth. End-to-end ownership from discovery to production.',
+  },
+  {
     role: 'Senior Software Engineer',
     company: 'Codzgarage Infotech Pvt Ltd',
     location: 'Ahmedabad, Gujarat',
-    period: 'Mar 2023 — Present',
+    period: 'Mar 2023 — May 2026',
     desc: 'Lead developer architecting end-to-end web applications with NestJS and Node.js. Spearheaded AI integration using Gemini and OpenAI with LangChain & RAG pipelines. Designed AWS infrastructure and mentored junior developers in NestJS design patterns.',
   },
   {
@@ -59,12 +66,12 @@ export default function Page() {
     name: 'Rahul Panchal',
     url: SITE_URL,
     image: `${SITE_URL}/apple-icon.png`,
-    jobTitle: 'Senior Software Engineer',
+    jobTitle: 'Senior Software Engineer · Independent Automation Consultant',
     description:
-      'Senior Software Engineer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs.',
+      'Senior Software Engineer with 6+ years building scalable Node.js & NestJS systems, MERN stack apps, and Python-powered AI agents with LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Now working independently with businesses to design automation that cuts costs and eliminates repetitive work.',
     worksFor: {
       '@type': 'Organization',
-      name: 'Codzgarage Infotech Pvt Ltd',
+      name: 'Self-Employed',
     },
     address: {
       '@type': 'PostalAddress',
@@ -105,11 +112,15 @@ export default function Page() {
             <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight font-mono glow-text glitch-hover">
               Rahul Panchal
               <br />
-              <span className="text-3xl lg:text-4xl">Senior Software Engineer</span>
+              <span className="text-3xl lg:text-4xl">
+                Senior Software Engineer
+                <br />
+                <span className="text-primary">&amp; Automation Consultant</span>
+              </span>
               <span className="terminal-cursor" />
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-              6+ years building scalable Node.js &amp; NestJS systems, MERN stack applications, and Python-powered AI agents using LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Based in India.{' '}
+              6+ years building scalable Node.js &amp; NestJS systems, MERN stack applications, and Python-powered AI agents using LangChain, LangGraph, CrewAI, RAG pipelines, and LLM APIs. Now working independently with businesses — designing automation that cuts costs, eliminates repetitive work, and unlocks growth. Based in India.{' '}
               <span className="text-primary font-mono">Always shipping.</span>
             </p>
           </section>
@@ -121,10 +132,10 @@ export default function Page() {
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed max-w-2xl mb-8">
               <p>
-                Innovative Senior Software Engineer with 6+ years of experience specializing in scalable Node.js and NestJS architectures. Expert in the MERN stack, Python AI services, and cloud-native solutions on AWS.
+                Innovative Senior Software Engineer with 6+ years of experience specializing in scalable Node.js and NestJS architectures. Expert in the MERN stack, Python AI services, and cloud-native solutions on AWS. Now operating independently as an automation consultant — partnering directly with businesses to ship systems that cut operational costs and eliminate the repetitive work that drains teams.
               </p>
               <p>
-                I bridge robust backend engineering with intelligent AI integration — building LLM-powered applications, RAG pipelines, and autonomous AI agents in Python with LangGraph, CrewAI, and LlamaIndex. Recognized for technical leadership, successfully migrating legacy systems to modern SaaS platforms and delivering 20+ production-ready enterprise solutions.
+                I bridge robust backend engineering with intelligent AI integration — building LLM-powered applications, RAG pipelines, and autonomous AI agents in Python with LangGraph, CrewAI, and LlamaIndex. Recognized for technical leadership, successfully migrating legacy systems to modern SaaS platforms and delivering 20+ production-ready enterprise solutions. Focused now on translating that engineering depth into measurable business outcomes — faster workflows, lower headcount strain, more time for the work that actually moves revenue.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">

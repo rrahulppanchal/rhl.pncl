@@ -16,6 +16,8 @@ export function NewsletterForm() {
   const [shown, setShown]             = useState(0);
   const [submitting, setSubmitting]   = useState(false);
   const [committedEmail, setCommittedEmail] = useState<string | null>(null);
+  const [fetchResult, setFetchResult] = useState<'pending' | 'ok' | { err: string }>('pending');
+  const [animDone, setAnimDone]       = useState(false);
 
   const successLines: Line[] = useMemo(() => {
     if (!committedEmail) return [];
@@ -45,26 +47,37 @@ export function NewsletterForm() {
       phase === 'error'   ? errorLines : [];
     if (lines.length === 0) return;
     setShown(0);
+    if (phase === 'sending') setAnimDone(false);
     const timers: number[] = [];
     lines.forEach((_, i) => {
       timers.push(window.setTimeout(() => setShown(i + 1), i * LINE_MS));
     });
     if (phase === 'sending') {
       timers.push(
-        window.setTimeout(() => {
-          setPhase('sent');
-          setEmail('');
-        }, lines.length * LINE_MS + 200),
+        window.setTimeout(() => setAnimDone(true), lines.length * LINE_MS + 200),
       );
     }
     return () => timers.forEach(clearTimeout);
   }, [phase, successLines, errorLines]);
+
+  useEffect(() => {
+    if (phase !== 'sending' || !animDone || fetchResult === 'pending') return;
+    if (fetchResult === 'ok') {
+      setPhase('sent');
+      setEmail('');
+    } else {
+      setErrorMsg(fetchResult.err);
+      setPhase('error');
+    }
+  }, [phase, animDone, fetchResult]);
 
   const reset = () => {
     setPhase('idle');
     setShown(0);
     setErrorMsg(null);
     setCommittedEmail(null);
+    setFetchResult('pending');
+    setAnimDone(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -86,6 +99,11 @@ export function NewsletterForm() {
     }
 
     setSubmitting(true);
+    setCommittedEmail(value);
+    setFetchResult('pending');
+    setAnimDone(false);
+    setPhase('sending');
+
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -100,18 +118,13 @@ export function NewsletterForm() {
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (!res.ok || !json.ok) {
-        setErrorMsg(json.error || `server returned ${res.status}`);
-        setShakeKey(k => k + 1);
-        setPhase('error');
-        return;
+        setFetchResult({ err: json.error || `server returned ${res.status}` });
+      } else {
+        setFetchResult('ok');
       }
-      setCommittedEmail(value);
-      setPhase('sending');
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'network error';
-      setErrorMsg(`network: ${msg}`);
-      setShakeKey(k => k + 1);
-      setPhase('error');
+      setFetchResult({ err: `network: ${msg}` });
     } finally {
       setSubmitting(false);
     }
@@ -169,17 +182,11 @@ export function NewsletterForm() {
           />
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || phase === 'sending'}
             className="px-6 py-2.5 bg-primary text-primary-foreground font-mono text-sm hover:opacity-90 transition-opacity whitespace-nowrap group/btn flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {submitting ? (
-              <span>Transmitting<span className="animate-[blink_1s_step-end_infinite]">...</span></span>
-            ) : (
-              <>
-                Subscribe
-                <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
-              </>
-            )}
+            Subscribe
+            <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
           </button>
         </form>
       </div>
@@ -233,7 +240,7 @@ function SuccessModal({
           {lines.slice(0, shown).map((line, i) => (
             <TerminalLine key={i} line={line} />
           ))}
-          {isSending && shown < lines.length && (
+          {isSending && (
             <p className="text-primary animate-pulse text-base">▋</p>
           )}
           {isSent && (

@@ -181,7 +181,7 @@ export function Sidebar() {
           <div className="absolute top-0 right-0 h-px w-12 bg-gradient-to-l from-primary/40 to-transparent" />
         </div>
 
-        <div className="flex flex-col flex-1 overflow-y-auto">
+        <div className="flex flex-col flex-1 min-h-0">
 
           {/* ── Profile Block ───────────────────────────────── */}
           <div className="px-6 pt-8 pb-6 border-b border-border/60">
@@ -197,15 +197,18 @@ export function Sidebar() {
                   <span className="relative inline-flex h-3 w-3 bg-primary" />
                 </span>
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <Link
                   href="/"
-                  className="block text-base font-bold text-foreground font-mono hover:text-primary transition-colors leading-tight mb-0.5"
+                  className="block text-base font-bold text-foreground font-mono hover:text-primary transition-colors leading-tight mb-1"
                 >
                   Rahul Panchal
                 </Link>
-                <p className="text-xs text-muted-foreground font-mono leading-relaxed">
+                <p className="text-[11px] text-muted-foreground font-mono leading-snug">
                   Senior Software Engineer
+                </p>
+                <p className="text-[10px] text-primary/80 font-mono leading-snug mt-0.5">
+                  Automation Consultant
                 </p>
               </div>
             </div>
@@ -218,7 +221,7 @@ export function Sidebar() {
           </div>
 
           {/* ── Navigation ──────────────────────────────────── */}
-          <nav className="flex-1 px-3 py-5">
+          <nav className="flex-1 min-h-0 overflow-y-auto px-3 py-5">
             {/* Label */}
             <p className="px-3 mb-3 text-[11px] text-muted-foreground/80 font-mono uppercase tracking-widest">
               Navigation

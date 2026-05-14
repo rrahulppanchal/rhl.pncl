@@ -157,7 +157,7 @@ export default function ServicesPage() {
       '@type': 'Person',
       name: 'Rahul Panchal',
       url: SITE_URL,
-      jobTitle: 'Senior Software Engineer',
+      jobTitle: 'Senior Software Engineer · Independent Automation Consultant',
     },
     areaServed: 'Worldwide',
     serviceType: services.map(s => s.title),
@@ -187,7 +187,7 @@ export default function ServicesPage() {
               I build <span className="text-primary font-mono">AI tools</span>,{' '}
               <span className="text-primary font-mono">autonomous agents</span>,{' '}
               <span className="text-primary font-mono">automation pipelines</span>, and{' '}
-              <span className="text-primary font-mono">production web apps</span> — from quick MVPs to enterprise-grade systems. Senior engineer, hands-on, end-to-end.
+              <span className="text-primary font-mono">production web apps</span> — from quick MVPs to enterprise-grade systems. Independent senior engineer — hands-on, end-to-end, accountable to outcomes.
             </p>
           </section>
 

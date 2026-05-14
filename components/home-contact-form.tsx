@@ -24,6 +24,8 @@ export function HomeContactForm() {
   const [shown, setShown]             = useState(0);
   const [txCtx, setTxCtx]             = useState<{ email: string; bytes: number } | null>(null);
   const [errSnapshot, setErrSnapshot] = useState<Errors>({});
+  const [fetchResult, setFetchResult] = useState<'pending' | 'ok' | { err: string }>('pending');
+  const [animDone, setAnimDone]       = useState(false);
 
   const successLines: Line[] = useMemo(() => {
     if (!txCtx) return [];
@@ -61,15 +63,13 @@ export function HomeContactForm() {
   useEffect(() => {
     if (phase === 'sending' && successLines.length > 0) {
       setShown(0);
+      setAnimDone(false);
       const timers: number[] = [];
       successLines.forEach((_, i) => {
         timers.push(window.setTimeout(() => setShown(i + 1), i * LINE_MS));
       });
       timers.push(
-        window.setTimeout(() => {
-          setPhase('sent');
-          setForm({ name: '', email: '', message: '' });
-        }, successLines.length * LINE_MS + 200),
+        window.setTimeout(() => setAnimDone(true), successLines.length * LINE_MS + 200),
       );
       return () => timers.forEach(clearTimeout);
     }
@@ -82,6 +82,17 @@ export function HomeContactForm() {
       return () => timers.forEach(clearTimeout);
     }
   }, [phase, successLines, errorLines]);
+
+  useEffect(() => {
+    if (phase !== 'sending' || !animDone || fetchResult === 'pending') return;
+    if (fetchResult === 'ok') {
+      setPhase('sent');
+      setForm({ name: '', email: '', message: '' });
+    } else {
+      setErrSnapshot({ message: fetchResult.err });
+      setPhase('error');
+    }
+  }, [phase, animDone, fetchResult]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -116,6 +127,14 @@ export function HomeContactForm() {
     }
     setErrors({});
     setSubmitting(true);
+    setTxCtx({
+      email: form.email,
+      bytes: new Blob([form.message]).size,
+    });
+    setFetchResult('pending');
+    setAnimDone(false);
+    setPhase('sending');
+
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -124,22 +143,13 @@ export function HomeContactForm() {
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (!res.ok || !json.ok) {
-        const msg = json.error || `server returned ${res.status}`;
-        setErrSnapshot({ message: msg });
-        setShakeKey(k => k + 1);
-        setPhase('error');
-        return;
+        setFetchResult({ err: json.error || `server returned ${res.status}` });
+      } else {
+        setFetchResult('ok');
       }
-      setTxCtx({
-        email: form.email,
-        bytes: new Blob([form.message]).size,
-      });
-      setPhase('sending');
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'network error';
-      setErrSnapshot({ message: `network: ${msg}` });
-      setShakeKey(k => k + 1);
-      setPhase('error');
+      setFetchResult({ err: `network: ${msg}` });
     } finally {
       setSubmitting(false);
     }
@@ -150,6 +160,8 @@ export function HomeContactForm() {
     setTxCtx(null);
     setErrSnapshot({});
     setShown(0);
+    setFetchResult('pending');
+    setAnimDone(false);
   };
 
   const fieldCls = (k: FieldKey) =>
@@ -241,19 +253,11 @@ export function HomeContactForm() {
 
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || phase === 'sending'}
                 className="w-full bg-primary text-primary-foreground py-3 font-mono text-sm hover:opacity-90 transition-all group/btn flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {submitting ? (
-                  <span>
-                    Transmitting<span className="animate-[blink_1s_step-end_infinite]">...</span>
-                  </span>
-                ) : (
-                  <>
-                    Send Message
-                    <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
-                  </>
-                )}
+                Send Message
+                <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
               </button>
             </form>
         </div>
@@ -308,7 +312,7 @@ function SuccessModal({
           {lines.slice(0, shown).map((line, i) => (
             <TerminalLine key={i} line={line} />
           ))}
-          {isSending && shown < lines.length && (
+          {isSending && (
             <p className="text-primary animate-pulse text-base">▋</p>
           )}
           {isSent && (
