@@ -18,9 +18,9 @@ function WhatsAppIcon() {
 const navItems = [
   {
     path: '/',
-    label: 'home',
+    label: 'Home',
     num: '01',
-    desc: 'intro & overview',
+    desc: 'About me and my work',
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -30,9 +30,9 @@ const navItems = [
   },
   {
     path: '/services',
-    label: 'services',
+    label: 'Services',
     num: '02',
-    desc: 'hire me · what i build',
+    desc: 'What I can build',
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
         <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
@@ -41,9 +41,9 @@ const navItems = [
   },
   {
     path: '/projects',
-    label: 'projects',
+    label: 'Projects',
     num: '03',
-    desc: 'selected work',
+    desc: 'Selected products',
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
         <rect x="2" y="3" width="20" height="14" rx="0" />
@@ -54,9 +54,9 @@ const navItems = [
   },
   {
     path: '/blogs',
-    label: 'blogs',
+    label: 'Writing',
     num: '04',
-    desc: 'thoughts & articles',
+    desc: 'Project stories and engineering notes',
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -69,9 +69,9 @@ const navItems = [
   },
   {
     path: '/contact',
-    label: 'contact',
+    label: 'Contact',
     num: '05',
-    desc: 'get in touch',
+    desc: 'Discuss a role or project',
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -206,10 +206,10 @@ export function Sidebar() {
                   Rahul Panchal
                 </Link>
                 <p className="text-[11px] text-muted-foreground font-mono leading-snug">
-                  Senior Software Engineer
+                  Full Stack &amp; Generative AI Engineer
                 </p>
                 <p className="text-[10px] text-primary/80 font-mono leading-snug mt-0.5">
-                  Automation Consultant
+                  Senior Developer &amp; Team Lead
                 </p>
               </div>
             </div>
@@ -217,7 +217,7 @@ export function Sidebar() {
             {/* Status pill */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-primary/25 bg-primary/5 text-xs font-mono text-primary/80">
               <span className="w-1.5 h-1.5 bg-primary animate-pulse rounded-full shrink-0" />
-              available for work
+              Open to remote opportunities
             </div>
           </div>
 
@@ -336,7 +336,7 @@ export function Sidebar() {
               </p>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-primary animate-pulse inline-block rounded-full" />
-                <p className="text-[12px] text-foreground/80 font-mono">online · India</p>
+                <p className="text-[12px] text-foreground/80 font-mono">Ahmedabad, India</p>
               </div>
             </div>
           </div>

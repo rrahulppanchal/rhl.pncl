@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'Rahul Panchal — Senior Software Engineer & Automation Consultant';
+export const alt = 'Rahul Panchal — Full Stack & Generative AI Engineer';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -67,8 +67,8 @@ export default async function OG() {
             marginBottom: 22,
           }}
         >
-          <span style={{ color: fg }}>Senior Software Engineer</span>
-          <span style={{ color: primary }}>&amp; Automation Consultant</span>
+          <span style={{ color: fg }}>Full Stack &amp;</span>
+          <span style={{ color: primary }}>Generative AI Engineer</span>
         </div>
 
         {/* Tagline */}
@@ -81,7 +81,7 @@ export default async function OG() {
             maxWidth: 980,
           }}
         >
-          AI agents · Automation · Cloud engineering · Node.js · NestJS · Python — partnering with businesses to cut costs and unlock growth.
+          I build AI-powered products from backend to launch — AI application builders, Python/FastAPI, document-based RAG, and web and mobile apps.
         </div>
 
         {/* Flex spacer */}
@@ -103,18 +103,18 @@ export default async function OG() {
           {/* Stats row */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-              <span style={{ color: primary, fontSize: 24, fontWeight: 700 }}>6+</span>
+              <span style={{ color: primary, fontSize: 24, fontWeight: 700 }}>5+</span>
               <span>years</span>
             </div>
             <span style={{ color: dimSoft }}>·</span>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-              <span style={{ color: primary, fontSize: 24, fontWeight: 700 }}>20+</span>
-              <span>builds</span>
+              <span style={{ color: primary, fontSize: 24, fontWeight: 700 }}>7–8</span>
+              <span>person team led</span>
             </div>
             <span style={{ color: dimSoft }}>·</span>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-              <span style={{ color: primary, fontSize: 24, fontWeight: 700 }}>~65%</span>
-              <span>cost cut</span>
+              <span style={{ color: primary, fontSize: 24, fontWeight: 700 }}>Android + iOS</span>
+              <span>releases</span>
             </div>
           </div>
 
@@ -129,7 +129,7 @@ export default async function OG() {
                 borderRadius: 5,
               }}
             />
-            <span>India · available for work</span>
+            <span>Ahmedabad, India · Remote</span>
           </div>
         </div>
 

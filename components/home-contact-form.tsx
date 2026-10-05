@@ -228,7 +228,7 @@ export function HomeContactForm() {
                     name="email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="your@email.com"
+                    placeholder="Your email address"
                     autoComplete="off"
                     aria-invalid={!!errors.email}
                     className={fieldCls('email')}
@@ -246,7 +246,7 @@ export function HomeContactForm() {
                   value={form.message}
                   onChange={handleChange}
                   rows={5}
-                  placeholder="Tell me about your project or idea..."
+                  placeholder="What are you building, and where could I help?"
                   autoComplete="off"
                   aria-invalid={!!errors.message}
                   className={`${fieldCls('message')} resize-none`}
@@ -259,7 +259,7 @@ export function HomeContactForm() {
                 disabled={submitting || phase === 'sending'}
                 className="w-full bg-primary text-primary-foreground py-3 font-mono text-sm hover:opacity-90 transition-all group/btn flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Send Message
+                Send message
                 <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
               </button>
             </form>

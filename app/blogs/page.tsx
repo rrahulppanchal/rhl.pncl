@@ -3,23 +3,24 @@ import { readDB } from '@/lib/db';
 import { Sidebar } from '@/components/sidebar';
 import { BlogsList } from '@/components/blogs-list';
 
+const TITLE = 'Engineering Case Studies & Writing | Rahul Panchal';
+const DESCRIPTION =
+  'First-person case studies on Klego, Raccog, and Solviser, covering Generative AI, Python APIs, application builders, and mobile product delivery.';
+
 export const metadata: Metadata = {
-  title: 'Blog — Notes on AI, Backend, DevOps & Engineering',
-  description:
-    'Articles on Node.js, NestJS, system design, AI integration with LangChain & RAG, and full-stack engineering best practices by Rahul Panchal.',
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
   alternates: { canonical: '/blogs' },
   openGraph: {
     type: 'website',
     url: '/blogs',
-    title: 'Blog — Rahul Panchal',
-    description:
-      'Articles on Node.js, NestJS, system design, AI integration with LangChain & RAG, and full-stack engineering best practices.',
+    title: TITLE,
+    description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog — Rahul Panchal',
-    description:
-      'Articles on Node.js, NestJS, system design, AI integration, and full-stack engineering best practices.',
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
@@ -38,14 +39,14 @@ export default function BlogsPage() {
           {/* Header */}
           <section className="mb-12">
             <p className="text-muted-foreground text-sm mb-4 font-mono">
-              <span className="text-primary">{'>'}</span> Thoughts and Insights
+              <span className="text-primary">{'>'}</span> Project stories and engineering notes
             </p>
             <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight font-mono glow-text glitch-hover">
-              Blog
+              Writing
               <span className="terminal-cursor" />
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-              Articles on web development, system design, AI integration, and engineering best practices.
+              First-person project stories and notes on full-stack and Generative AI engineering. I write about the systems I build, the parts I own, and how the application fits together.
             </p>
           </section>
 
