@@ -55,7 +55,7 @@ const methods: Method[] = [
   { label: 'Email',    value: 'rhl.pncl@gmail.com', link: 'mailto:rhl.pncl@gmail.com',                  Icon: MailIcon,     external: false },
   { label: 'Phone',    value: '+91 63927 58956',    link: 'tel:+916392758956',                          Icon: PhoneIcon,    external: false },
   { label: 'GitHub',   value: 'rrahulppanchal',     link: 'https://github.com/rrahulppanchal',          Icon: GitHubIcon,   external: true  },
-  { label: 'LinkedIn', value: 'rrahulppanchal',     link: 'https://in.linkedin.com/in/rrahulppanchal',  Icon: LinkedInIcon, external: true  },
+  { label: 'LinkedIn', value: 'rrahulppanchal',     link: 'https://linkedin.com/in/rrahulppanchal',     Icon: LinkedInIcon, external: true  },
   { label: 'WhatsApp', value: 'chat with me',       link: WHATSAPP_URL,                                 Icon: WhatsAppIcon, external: true  },
 ];
 
@@ -88,12 +88,11 @@ export function ContactMethods() {
 
         <div className="border-t border-border pt-6 mt-6">
           <p className="text-xs text-muted-foreground font-mono mb-3">
-            <span className="text-primary">//</span> response_time
+            <span className="text-primary">//</span> location
           </p>
+          <p className="text-sm text-foreground font-mono mb-6">Ahmedabad, India</p>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Typically responds within{' '}
-            <span className="text-primary font-mono">24–48h</span>{' '}
-            on weekdays. Urgent? Reach out directly on LinkedIn or WhatsApp.
+            Prefer a direct conversation? Email me or connect with me on LinkedIn.
           </p>
         </div>
       </aside>

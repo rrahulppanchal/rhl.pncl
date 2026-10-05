@@ -23,7 +23,7 @@ export function ContactForm() {
     name: '',
     email: '',
     subject: '',
-    type: 'general',
+    type: 'engineering-role',
     message: '',
   });
   const [errors, setErrors]     = useState<Errors>({});
@@ -45,7 +45,7 @@ export function ContactForm() {
       { text: '> opening secure channel..............OK', tone: 'ok' },
       { text: `> transmitting ${txCtx.bytes} bytes...........OK`, tone: 'ok' },
       { text: '> awaiting server ack.................OK', tone: 'ok' },
-      { text: '✓ message delivered. response within 24–48h.', tone: 'final-ok' },
+      { text: '✓ message delivered. thanks for reaching out.', tone: 'final-ok' },
     ];
   }, [txCtx]);
 
@@ -96,7 +96,7 @@ export function ContactForm() {
     if (phase !== 'sending' || !animDone || fetchResult === 'pending') return;
     if (fetchResult === 'ok') {
       setPhase('sent');
-      setFormData({ name: '', email: '', subject: '', type: 'general', message: '' });
+      setFormData({ name: '', email: '', subject: '', type: 'engineering-role', message: '' });
     } else {
       setErrSnapshot({ message: fetchResult.err });
       setPhase('error');
@@ -235,7 +235,7 @@ export function ContactForm() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="your@email.com"
+                placeholder="Your email address"
                 autoComplete="off"
                 aria-invalid={!!errors.email}
                 className={fieldCls('email')}
@@ -250,7 +250,7 @@ export function ContactForm() {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                placeholder="What's this about?"
+                placeholder="Role or project name"
                 autoComplete="off"
                 aria-invalid={!!errors.subject}
                 className={fieldCls('subject')}
@@ -267,10 +267,9 @@ export function ContactForm() {
                 className={`${inputBase} border-border`}
                 style={{ appearance: 'none' }}
               >
-                <option value="general">General Inquiry</option>
-                <option value="collaboration">Collaboration</option>
-                <option value="project">Project Discussion</option>
-                <option value="freelance">Freelance Work</option>
+                <option value="engineering-role">Engineering role</option>
+                <option value="contract-project">Contract project</option>
+                <option value="ai-integration">AI integration</option>
                 <option value="other">Other</option>
               </select>
             </div>
@@ -282,7 +281,7 @@ export function ContactForm() {
                 value={formData.message}
                 onChange={handleChange}
                 rows={6}
-                placeholder="Tell me more about your inquiry..."
+                placeholder="Tell me about the product, the work, and your timeline."
                 autoComplete="off"
                 aria-invalid={!!errors.message}
                 className={`${fieldCls('message')} resize-none`}
@@ -295,7 +294,7 @@ export function ContactForm() {
               disabled={submitting || phase === 'sending'}
               className="w-full bg-primary text-primary-foreground py-3 font-mono text-sm hover:opacity-90 transition-all group/btn flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Send Message
+              Send message
               <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
             </button>
           </form>

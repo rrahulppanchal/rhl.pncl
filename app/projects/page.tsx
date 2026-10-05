@@ -4,23 +4,24 @@ import { readProjectsDB } from '@/lib/db';
 import { Sidebar } from '@/components/sidebar';
 import type { Project, ProjectStatus } from '@/types/project';
 
+const TITLE = 'AI, Web & Mobile Projects | Rahul Panchal';
+const DESCRIPTION =
+  'Explore Klego, Raccog, and Solviser: AI application builders, document-based RAG, and mobile delivery with clear roles and implementation scope.';
+
 export const metadata: Metadata = {
-  title: 'Projects — AI, Full-Stack & Cloud Case Studies',
-  description:
-    'Selected projects by Rahul Panchal across full-stack development, AI/LLM integration, and cloud infrastructure. Tech stacks, status, and case studies.',
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
   alternates: { canonical: '/projects' },
   openGraph: {
     type: 'website',
     url: '/projects',
-    title: 'Projects — Rahul Panchal',
-    description:
-      'Selected projects across full-stack development, AI/LLM integration, and cloud infrastructure.',
+    title: TITLE,
+    description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Projects — Rahul Panchal',
-    description:
-      'Selected projects across full-stack development, AI/LLM integration, and cloud infrastructure.',
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
@@ -51,18 +52,9 @@ function ExternalIcon() {
 
 export default function ProjectsPage() {
   const db = readProjectsDB();
-  const projects: Project[] = db.projects.filter(p => p.published);
-
-  const completed  = projects.filter(p => p.status === 'Completed').length;
-  const inProgress = projects.filter(p => p.status === 'In Progress').length;
-  const techSet    = new Set(projects.flatMap(p => p.tech));
-
-  const stats = [
-    { label: 'Projects',    value: `${projects.length}+` },
-    { label: 'Completed',   value: String(completed) },
-    { label: 'In Progress', value: String(inProgress) },
-    { label: 'Technologies', value: `${techSet.size}+` },
-  ];
+  const published: Project[] = db.projects.filter(p => p.published);
+  const projects  = published.filter(p => (p.section ?? 'featured') === 'featured');
+  const otherWork = published.filter(p => p.section === 'other');
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -74,14 +66,14 @@ export default function ProjectsPage() {
           {/* Header */}
           <section className="mb-16">
             <p className="text-muted-foreground text-sm mb-4 font-mono">
-              <span className="text-primary">{'>'}</span> Featured Work
+              <span className="text-primary">{'>'}</span> Selected projects
             </p>
             <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight font-mono glow-text glitch-hover">
               Projects
               <span className="terminal-cursor" />
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-              A collection of projects spanning full-stack development, AI/ML, and cloud infrastructure. Each represents a unique challenge and learning opportunity.
+              My recent work covers AI application generation, document-based RAG, and mobile product delivery. Each case study explains the product, my role, and the engineering work I owned.
             </p>
           </section>
 
@@ -96,7 +88,9 @@ export default function ProjectsPage() {
             <section className="mb-20 space-y-6">
               {projects.map((project, idx) => {
                 const s = statusStyles[project.status];
-                const hasLiveLink   = project.link   && project.link   !== '#';
+                const detailHref    = project.caseStudy ?? `/projects/${project.slug}`;
+                const extraLinks    = project.links ?? [];
+                const hasLiveLink   = project.link   && project.link   !== '#' && extraLinks.length === 0;
                 const hasGithubLink = project.github && project.github !== '#';
 
                 return (
@@ -105,35 +99,40 @@ export default function ProjectsPage() {
                     className="border border-border p-8 hover:border-primary hover:shadow-md transition-all group corner-cut"
                   >
                     {/* Card header */}
-                    <div className="flex justify-between items-start mb-4">
+                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-3">
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-2">
+                        <div className="flex items-center gap-3 mb-1">
                           <span className="text-xs text-primary/40 font-mono shrink-0">
                             _{String(idx + 1).padStart(2, '0')}
                           </span>
-                          <Link href={`/projects/${project.slug}`}>
-                          <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors hover:underline underline-offset-4">
-                            {project.name}
-                          </h3>
+                          <Link href={detailHref}>
+                            <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors hover:underline underline-offset-4">
+                              {project.name}
+                            </h3>
                           </Link>
-                          {project.featured && (
-                            <span className="text-[10px] px-1.5 py-0.5 border border-primary/30 text-primary/60 font-mono shrink-0">
-                              featured
-                            </span>
-                          )}
                         </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{project.description}</p>
+                        {(project.subtitle || project.role) && (
+                          <p className="text-xs font-mono mb-3 pl-9">
+                            {project.subtitle && <span className="text-foreground/80">{project.subtitle}</span>}
+                            {project.subtitle && project.role && <span className="text-muted-foreground/40"> · </span>}
+                            {project.role && <span className="text-primary/80">{project.role}</span>}
+                          </p>
+                        )}
                       </div>
 
-                      {/* Status + year */}
-                      <div className="flex flex-col items-end gap-2 ml-6 shrink-0">
+                      {/* Status */}
+                      <div className="flex flex-col sm:items-end gap-2 sm:ml-6 shrink-0">
                         <span className={`flex items-center gap-1.5 text-xs px-2.5 py-1 border font-mono ${s.badge}`}>
                           <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
-                          {project.status}
+                          {project.statusLabel ?? project.status}
                         </span>
-                        <span className="text-xs text-muted-foreground/60 font-mono">{project.year}</span>
+                        {project.year && !project.statusLabel && (
+                          <span className="text-xs text-muted-foreground/60 font-mono">{project.year}</span>
+                        )}
                       </div>
                     </div>
+
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-5">{project.description}</p>
 
                     {/* Tech stack */}
                     <div className="flex flex-wrap gap-2 mb-5">
@@ -148,24 +147,35 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Action links */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
                       <Link
-                        href={`/projects/${project.slug}`}
-                        className="flex items-center gap-1.5 text-muted-foreground text-xs font-mono hover:text-primary transition-colors"
+                        href={detailHref}
+                        className="flex items-center gap-1.5 text-primary text-sm font-mono hover:opacity-80 transition-opacity group/cs"
                       >
-                        Case Study →
+                        {project.caseStudy ? 'Read case study' : 'Case Study'}
+                        <span className="transition-transform group-hover/cs:translate-x-1 inline-block">→</span>
                       </Link>
+                      {extraLinks.map(l => (
+                        <a
+                          key={l.url}
+                          href={l.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-muted-foreground text-xs font-mono hover:text-primary transition-colors"
+                        >
+                          {l.label}
+                          <ExternalIcon />
+                        </a>
+                      ))}
                       {hasLiveLink && (
                         <a
                           href={project.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-primary text-sm font-mono group/link hover:opacity-80 transition-opacity"
+                          className="flex items-center gap-2 text-muted-foreground text-xs font-mono hover:text-primary transition-colors"
                         >
                           View Project
-                          <span className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 inline-block">
-                            <ExternalIcon />
-                          </span>
+                          <ExternalIcon />
                         </a>
                       )}
                       {hasGithubLink && (
@@ -179,11 +189,6 @@ export default function ProjectsPage() {
                           Source
                         </a>
                       )}
-                      {!hasLiveLink && !hasGithubLink && (
-                        <span className="text-muted-foreground/40 text-xs font-mono">
-                          {'/* '}coming soon{' */'}
-                        </span>
-                      )}
                     </div>
                   </div>
                 );
@@ -191,20 +196,39 @@ export default function ProjectsPage() {
             </section>
           )}
 
-          {/* Stats */}
+          {/* Other work */}
+          {otherWork.length > 0 && (
+            <section className="mb-20">
+              <h2 className="text-sm font-bold text-muted-foreground mb-6 font-mono uppercase tracking-widest">
+                <span className="text-primary">//</span> Other work
+              </h2>
+              <div className="space-y-4">
+                {otherWork.map(project => (
+                  <div key={project.id} className="border border-border p-6">
+                    <h3 className="text-base font-semibold text-foreground mb-2">{project.name}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">{project.description}</p>
+                    <p className="text-xs text-muted-foreground/70 font-mono">{project.tech.join(' • ')}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Closing CTA */}
           <section className="border-t border-border pt-16">
-            <h3 className="text-sm font-bold text-muted-foreground mb-8 font-mono uppercase tracking-widest">
-              <span className="text-primary">//</span> Stats
+            <h3 className="text-xl font-bold text-foreground mb-3 font-mono">
+              Want to discuss the engineering behind a project?
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border">
-              {stats.map(stat => (
-                <div key={stat.label} className="bg-background p-6 text-center group hover:bg-card transition-colors">
-                  <p className="text-3xl font-bold text-primary mb-1 font-mono">{stat.value}</p>
-                  <div className="w-8 h-px bg-primary/30 mx-auto mb-2" />
-                  <p className="text-xs text-muted-foreground uppercase tracking-widest">{stat.label}</p>
-                </div>
-              ))}
-            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-2xl">
+              Get in touch about the architecture, delivery scope, or a similar product you&apos;re building.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-3 font-mono text-sm font-semibold hover:opacity-90 transition-opacity group/btn"
+            >
+              Contact me
+              <span className="transition-transform group-hover/btn:translate-x-1 inline-block">→</span>
+            </Link>
           </section>
 
         </main>

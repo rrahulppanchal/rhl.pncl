@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { readProjectsDB } from '@/lib/db';
 import { Sidebar } from '@/components/sidebar';
 import { SITE_URL } from '@/lib/site';
+import { renderMarkdown } from '@/lib/markdown';
 import type { Project } from '@/types/project';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -23,88 +24,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const url = `${SITE_URL}/projects/${project.slug}`;
 
+  const description = project.seoDescription ?? project.description;
+
   return {
-    title: project.name,
-    description: project.description,
+    title: project.seoTitle ? { absolute: project.seoTitle } : project.name,
+    description,
     keywords: project.tech,
     alternates: { canonical: `/projects/${project.slug}` },
     openGraph: {
       type: 'article',
       url,
-      title: project.name,
-      description: project.description,
+      title: project.seoTitle ?? project.name,
+      description,
       siteName: 'Rahul Panchal',
       tags: project.tech,
     },
     twitter: {
       card: 'summary_large_image',
-      title: project.name,
-      description: project.description,
+      title: project.seoTitle ?? project.name,
+      description,
       creator: '@rrahulppanchal',
     },
   };
 }
 
-// Minimal markdown renderer (no dependencies)
-function renderMarkdown(content: string): React.ReactNode[] {
-  const blocks = content.split(/\n\n+/);
-
-  return blocks.map((block, i) => {
-    // Fenced code block
-    if (block.startsWith('```')) {
-      const lines = block.split('\n');
-      const lang = lines[0].slice(3).trim();
-      const code = lines.slice(1, lines.length - 1).join('\n');
-      return (
-        <pre key={i} className="bg-card border border-border p-4 overflow-x-auto my-6 text-xs font-mono text-foreground leading-relaxed relative">
-          {lang && (
-            <span className="absolute top-2 right-3 text-[10px] text-muted-foreground/50 font-mono uppercase">{lang}</span>
-          )}
-          <code>{code}</code>
-        </pre>
-      );
-    }
-
-    // Headings
-    if (block.startsWith('### ')) return <h3 key={i} className="text-lg font-bold text-foreground font-mono mt-8 mb-3">{inlineFormat(block.slice(4))}</h3>;
-    if (block.startsWith('## '))  return <h2 key={i} className="text-xl font-bold text-foreground font-mono mt-10 mb-4 glow-text">{inlineFormat(block.slice(3))}</h2>;
-    if (block.startsWith('# '))   return <h1 key={i} className="text-2xl font-bold text-foreground font-mono mt-10 mb-4">{inlineFormat(block.slice(2))}</h1>;
-
-    // Unordered list
-    if (block.split('\n').every(l => l.startsWith('- ') || l.trim() === '')) {
-      const items = block.split('\n').filter(l => l.startsWith('- '));
-      return (
-        <ul key={i} className="space-y-2 my-4 pl-4">
-          {items.map((item, j) => (
-            <li key={j} className="text-muted-foreground text-sm leading-relaxed flex gap-2">
-              <span className="text-primary shrink-0 mt-1">▹</span>
-              <span>{inlineFormat(item.slice(2))}</span>
-            </li>
-          ))}
-        </ul>
-      );
-    }
-
-    // Paragraph
-    return (
-      <p key={i} className="text-muted-foreground leading-relaxed my-4 text-sm">
-        {inlineFormat(block)}
-      </p>
-    );
-  });
-}
-
-function inlineFormat(text: string): React.ReactNode {
-  const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith('`') && part.endsWith('`')) {
-      return <code key={i} className="px-1.5 py-0.5 bg-card border border-border text-primary font-mono text-xs">{part.slice(1, -1)}</code>;
-    }
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i} className="text-foreground font-semibold">{part.slice(2, -2)}</strong>;
-    }
-    return part;
-  });
+function ExternalIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <polyline points="15 3 21 3 21 9" />
+      <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
+  );
 }
 
 const statusStyles: Record<string, { badge: string; dot: string }> = {
@@ -133,9 +84,13 @@ export default async function ProjectPage({ params }: Props) {
   const hasGithubLink = project.github && project.github !== '#';
 
   const url = `${SITE_URL}/projects/${project.slug}`;
-  const sameAs = [project.link, project.github].filter(
-    (l): l is string => !!l && l !== '#',
-  );
+  const sameAs = Array.from(new Set(
+    [project.link, project.github, ...(project.links ?? []).map(l => l.url)].filter(
+      (l): l is string => !!l && l !== '#',
+    ),
+  ));
+  // Explicit links replace the generic "View Live" button
+  const extraLinks = project.links ?? [];
 
   const projectJsonLd = {
     '@context': 'https://schema.org',
@@ -144,7 +99,7 @@ export default async function ProjectPage({ params }: Props) {
     description: project.description,
     url,
     keywords: project.tech.join(', '),
-    dateCreated: project.year,
+    ...(project.year ? { dateCreated: project.year } : {}),
     creativeWorkStatus: project.status,
     author: {
       '@type': 'Person',
@@ -191,9 +146,11 @@ export default async function ProjectPage({ params }: Props) {
             <div className="flex items-center gap-3 mb-4 flex-wrap">
               <span className={`flex items-center gap-1.5 text-xs px-2.5 py-1 border font-mono ${s.badge}`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
-                {project.status}
+                {project.statusLabel ?? project.status}
               </span>
-              <span className="text-xs text-muted-foreground/60 font-mono">{project.year}</span>
+              {project.year && !project.statusLabel && (
+                <span className="text-xs text-muted-foreground/60 font-mono">{project.year}</span>
+              )}
               {project.featured && (
                 <span className="text-[10px] px-1.5 py-0.5 border border-primary/30 text-primary/60 font-mono">
                   featured
@@ -204,6 +161,14 @@ export default async function ProjectPage({ params }: Props) {
             <h1 className="text-3xl lg:text-4xl font-bold text-foreground font-mono leading-tight mb-4 glow-text">
               {project.name}
             </h1>
+
+            {(project.subtitle || project.role) && (
+              <p className="text-sm font-mono mb-4">
+                {project.subtitle && <span className="text-foreground/90">{project.subtitle}</span>}
+                {project.subtitle && project.role && <span className="text-muted-foreground/40"> · </span>}
+                {project.role && <span className="text-primary/80">{project.role}</span>}
+              </p>
+            )}
 
             <p className="text-muted-foreground leading-relaxed mb-6">
               {project.description}
@@ -222,9 +187,30 @@ export default async function ProjectPage({ params }: Props) {
             </div>
 
             {/* Links */}
-            {(hasLiveLink || hasGithubLink) && (
-              <div className="flex items-center gap-4 mb-6">
-                {hasLiveLink && (
+            {(project.caseStudy || extraLinks.length > 0 || hasLiveLink || hasGithubLink) && (
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                {project.caseStudy && (
+                  <Link
+                    href={project.caseStudy}
+                    className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 font-mono text-xs hover:opacity-90 transition-opacity group/cs"
+                  >
+                    {project.caseStudyLabel ?? 'Read the complete case study'}
+                    <span className="transition-transform group-hover/cs:translate-x-1 inline-block">→</span>
+                  </Link>
+                )}
+                {extraLinks.map(l => (
+                  <a
+                    key={l.url}
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary text-sm font-mono hover:opacity-80 transition-opacity"
+                  >
+                    {l.label}
+                    <ExternalIcon />
+                  </a>
+                ))}
+                {hasLiveLink && extraLinks.length === 0 && (
                   <a
                     href={project.link}
                     target="_blank"
@@ -232,11 +218,7 @@ export default async function ProjectPage({ params }: Props) {
                     className="flex items-center gap-2 text-primary text-sm font-mono hover:opacity-80 transition-opacity"
                   >
                     View Live
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
+                    <ExternalIcon />
                   </a>
                 )}
                 {hasGithubLink && (

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { readDB } from '@/lib/db';
 import { Sidebar } from '@/components/sidebar';
 import { SITE_URL } from '@/lib/site';
+import { renderMarkdown } from '@/lib/markdown';
 import type { Blog } from '@/types/blog';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -25,16 +26,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isoDate = new Date(blog.date);
   const publishedTime = isNaN(isoDate.getTime()) ? undefined : isoDate.toISOString();
 
+  const description = blog.seoDescription ?? blog.description;
+
   return {
-    title: blog.title,
-    description: blog.description,
+    title: blog.seoTitle ? { absolute: blog.seoTitle } : blog.title,
+    description,
     keywords: blog.tags,
     alternates: { canonical: `/blogs/${blog.slug}` },
     openGraph: {
       type: 'article',
       url,
-      title: blog.title,
-      description: blog.description,
+      title: blog.seoTitle ?? blog.title,
+      description,
       siteName: 'Rahul Panchal',
       publishedTime,
       authors: ['Rahul Panchal'],
@@ -43,73 +46,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: blog.title,
-      description: blog.description,
+      title: blog.seoTitle ?? blog.title,
+      description,
       creator: '@rrahulppanchal',
     },
   };
 }
 
-// Very minimal markdown renderer (no extra dependencies)
-function renderMarkdown(content: string): React.ReactNode[] {
-  const blocks = content.split(/\n\n+/);
-
-  return blocks.map((block, i) => {
-    // Fenced code block
-    if (block.startsWith('```')) {
-      const lines = block.split('\n');
-      const code = lines.slice(1, lines.length - 1).join('\n');
-      return (
-        <pre key={i} className="bg-card border border-border p-4 overflow-x-auto my-6 text-xs font-mono text-foreground leading-relaxed">
-          <code>{code}</code>
-        </pre>
-      );
-    }
-
-    // Headings
-    if (block.startsWith('### ')) return <h3 key={i} className="text-lg font-bold text-foreground font-mono mt-8 mb-3">{block.slice(4)}</h3>;
-    if (block.startsWith('## '))  return <h2 key={i} className="text-xl font-bold text-foreground font-mono mt-10 mb-4 glow-text">{block.slice(3)}</h2>;
-    if (block.startsWith('# '))   return <h1 key={i} className="text-2xl font-bold text-foreground font-mono mt-10 mb-4">{block.slice(2)}</h1>;
-
-    // Unordered list
-    if (block.split('\n').every(l => l.startsWith('- ') || l.trim() === '')) {
-      const items = block.split('\n').filter(l => l.startsWith('- '));
-      return (
-        <ul key={i} className="space-y-2 my-4 pl-4">
-          {items.map((item, j) => (
-            <li key={j} className="text-muted-foreground text-sm leading-relaxed flex gap-2">
-              <span className="text-primary shrink-0 mt-1">▹</span>
-              <span>{inlineFormat(item.slice(2))}</span>
-            </li>
-          ))}
-        </ul>
-      );
-    }
-
-    // Paragraph
-    return (
-      <p key={i} className="text-muted-foreground leading-relaxed my-4 text-sm">
-        {inlineFormat(block)}
-      </p>
-    );
-  });
-}
-
-// Handle **bold** and `inline code` inline
-function inlineFormat(text: string): React.ReactNode {
-  const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith('`') && part.endsWith('`')) {
-      return <code key={i} className="px-1.5 py-0.5 bg-card border border-border text-primary font-mono text-xs">{part.slice(1, -1)}</code>;
-    }
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i} className="text-foreground font-semibold">{part.slice(2, -2)}</strong>;
-    }
-    return part;
-  });
-}
-
 const categoryColors: Record<string, string> = {
+  'Case Studies':   'text-emerald-400 border-emerald-400/30 bg-emerald-400/5',
   'Web Development': 'text-primary border-primary/30 bg-primary/5',
   'AI/ML':          'text-purple-400 border-purple-400/30 bg-purple-400/5',
   'Database':       'text-blue-400 border-blue-400/30 bg-blue-400/5',
@@ -165,7 +110,7 @@ export default async function BlogPostPage({ params }: Props) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home',  item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: 'Blogs', item: `${SITE_URL}/blogs` },
+      { '@type': 'ListItem', position: 2, name: 'Writing', item: `${SITE_URL}/blogs` },
       { '@type': 'ListItem', position: 3, name: blog.title, item: url },
     ],
   };

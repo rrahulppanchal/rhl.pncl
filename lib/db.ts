@@ -34,8 +34,11 @@ export function writeDB(data: DB): void {
 export function readProjectsDB(): ProjectsDB {
   try {
     const db = JSON.parse(fs.readFileSync(PROJECTS_PATH, 'utf-8')) as ProjectsDB;
-    // newest first by year (invalid years sink to the bottom)
+    // explicit order first, then newest first by year (invalid years sink to the bottom)
     db.projects.sort((a, b) => {
+      const oa = a.order ?? Infinity;
+      const ob = b.order ?? Infinity;
+      if (oa !== ob) return oa - ob;
       const ya = Number(a.year);
       const yb = Number(b.year);
       const na = isNaN(ya) ? -Infinity : ya;

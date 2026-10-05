@@ -1,6 +1,117 @@
 {
   "projects": [
     {
+      "id": "klego",
+      "slug": "klego",
+      "name": "Klego",
+      "subtitle": "AI application builder",
+      "role": "Contract Full-Stack Developer",
+      "status": "In Progress",
+      "statusLabel": "Ongoing • June 2026 – Present",
+      "year": "2026",
+      "description": "I lead full-stack development of an AI application builder that turns natural-language requirements into Next.js applications. My scope includes model integrations, Docker-isolated previews, versioning, GitHub synchronization, authentication, and AWS deployment.",
+      "content": "I work on Klego as a contract full-stack developer, leading development of an AI application builder that turns natural-language requirements into Next.js applications using autonomous coding agents.\n\nMy responsibility spans the application architecture, frontend and backend implementation, OpenAI and Gemini integrations, Docker-isolated execution and real-time previews, immutable versioning, GitHub synchronization, JWT/OAuth authentication, encrypted integrations, and AWS deployment.",
+      "tech": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "NestJS",
+        "PostgreSQL",
+        "Prisma",
+        "OpenAI",
+        "Gemini",
+        "AWS",
+        "Docker"
+      ],
+      "link": "#",
+      "github": "#",
+      "caseStudy": "/blogs/building-klego-ai-app-builder",
+      "section": "featured",
+      "order": 1,
+      "featured": true,
+      "published": true,
+      "seoTitle": "Klego — AI Application Builder | Rahul Panchal",
+      "seoDescription": "Rahul Panchal's ongoing work on Klego's AI application builder, covering model integrations, isolated previews, versioning, GitHub, and AWS delivery.",
+      "caseStudyLabel": "Read the complete Klego case study"
+    },
+    {
+      "id": "raccog",
+      "slug": "raccog",
+      "name": "Raccog",
+      "subtitle": "AI website and app platform",
+      "role": "Solo Founder",
+      "status": "Completed",
+      "statusLabel": "Live platform",
+      "year": "",
+      "description": "I built Raccog's website and app platform, including Python APIs with FastAPI and document-based RAG. The wider platform includes generation jobs, sandboxed React previews, MongoDB and S3-backed storage, publishing, analytics, and workflow features.",
+      "content": "I am the solo founder of Raccog, a website and app platform. My work includes Python backend APIs built with FastAPI and document-based retrieval-augmented generation.\n\nThe wider product uses Next.js, React, and TypeScript, with MongoDB and S3-backed storage. I also implemented persistent generation jobs, sandboxed React previews, database-backed publishing, and release snapshots, and developed analytics and workflow features.",
+      "tech": [
+        "Python",
+        "FastAPI",
+        "RAG",
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Node.js",
+        "MongoDB",
+        "AWS S3"
+      ],
+      "link": "https://raccog.com",
+      "github": "#",
+      "caseStudy": "/blogs/building-raccog-ai-platform",
+      "links": [
+        {
+          "label": "Visit Raccog",
+          "url": "https://raccog.com"
+        }
+      ],
+      "section": "featured",
+      "order": 2,
+      "featured": true,
+      "published": true,
+      "seoTitle": "Raccog — AI Website & App Platform | Rahul Panchal",
+      "seoDescription": "How Rahul Panchal built Raccog with Python/FastAPI APIs, document-based RAG, persistent generation jobs, sandboxed previews, and publishing.",
+      "caseStudyLabel": "Read the complete Raccog case study"
+    },
+    {
+      "id": "solviser",
+      "slug": "solviser",
+      "name": "Solviser",
+      "subtitle": "Business verification mobile app",
+      "role": "Sole Developer • Mobile App and Backend",
+      "status": "Completed",
+      "statusLabel": "Available on Android and iOS",
+      "year": "",
+      "description": "I built the Solviser React Native app and NestJS backend end to end as its sole developer. The app brings business-verification and due-diligence workflows to mobile and is available on Google Play and the Apple App Store.",
+      "content": "I built the Solviser mobile application and its NestJS backend end to end as the sole developer. The app brings business-verification and due-diligence workflows to mobile.\n\nMy delivery responsibility covered the React Native application, its NestJS backend, and the releases that made the app available on Google Play and the Apple App Store.",
+      "tech": [
+        "React Native",
+        "NestJS",
+        "Android",
+        "iOS"
+      ],
+      "link": "#",
+      "github": "#",
+      "caseStudy": "/blogs/building-solviser-mobile-app",
+      "links": [
+        {
+          "label": "Google Play",
+          "url": "https://play.google.com/store/apps/details?id=com.solviser.mobile"
+        },
+        {
+          "label": "App Store",
+          "url": "https://apps.apple.com/in/app/solviser/id6798547047"
+        }
+      ],
+      "section": "featured",
+      "order": 3,
+      "featured": true,
+      "published": true,
+      "seoTitle": "Solviser — Android & iOS App | Rahul Panchal",
+      "seoDescription": "A summary of Solviser's React Native application and NestJS backend, built end to end by Rahul Panchal and released on Android and iOS.",
+      "caseStudyLabel": "Read the complete Solviser case study"
+    },
+    {
       "id": "1",
       "slug": "parking-management-system",
       "name": "Parking Management System",
@@ -18,28 +129,28 @@
       "link": "#",
       "github": "",
       "status": "Completed",
-      "featured": true,
+      "featured": false,
       "published": false
     },
     {
       "id": "2",
       "slug": "enterprise-cashflow-management",
-      "name": "Enterprise Cash Flow Management",
-      "description": "Transformed a manual Excel-based workflow into a secure web and mobile FinTech solution for a Dubai-based enterprise with multi-company support.",
-      "content": "## Overview\n\nBuilt a secure enterprise-grade financial management platform for a Dubai-based client, replacing a complex manual Excel workflow with a unified web and mobile solution. The platform handles multi-entity accounting, real-time asset tracking, and comprehensive financial reporting.\n\n## Problem Statement\n\nThe client managed finances for multiple business entities using spreadsheets — a process that was error-prone, not auditable, and offered no real-time visibility. Switching between companies required separate Excel files, making consolidated reporting nearly impossible.\n\n## Solution\n\nDesigned a Node.js backend with PostgreSQL, exposing a REST API consumed by both the web dashboard and a mobile app. A signature \"Multiple Company Switch\" feature lets authorized users toggle between distinct business entities without logging out.\n\n## AWS Infrastructure\n\n- **VPC & Security Groups**: Isolated sensitive financial data within a private VPC, enforcing strict access controls and compliance requirements\n- **CloudWatch**: Configured monitoring and alarms to detect transaction anomalies and track system health in real-time\n- **RDS Backup Strategy**: Automated snapshotting and cross-region replication to prevent data loss on critical financial records\n\n## Key Features\n\n- Multiple Company Switch — manage distinct entities from one session\n- Real-time asset tracking and balance sheets\n- Cash flow forecasting with historical trend analysis\n- Automated report generation (PDF/Excel export)\n- Role-based permissions with full audit logging\n- Mobile app for on-the-go approvals and reporting\n\n## Outcome\n\nEliminated manual spreadsheet dependency entirely. The finance team gained real-time visibility across all entities and reduced monthly close time significantly.",
+      "name": "Enterprise account and cash flow management",
+      "description": "I helped replace an Excel-based process with a web platform for multi-company management and asset reporting. The backend used Node.js, PostgreSQL, and AWS, with infrastructure work covering access controls, monitoring, database snapshots, and replication.",
+      "content": "",
       "tech": [
         "Node.js",
         "PostgreSQL",
-        "React.js",
-        "AWS",
-        "Mobile App"
+        "AWS"
       ],
       "year": "2024",
       "link": "#",
-      "github": "",
+      "github": "#",
       "status": "Completed",
-      "featured": true,
-      "published": true
+      "featured": false,
+      "published": true,
+      "section": "other",
+      "order": 11
     },
     {
       "id": "4",
@@ -60,77 +171,95 @@
       "github": "",
       "status": "Completed",
       "featured": false,
-      "published": true
+      "published": false
     },
     {
       "id": "5",
       "slug": "database-query-chatbot",
-      "name": "Database Query Chatbot",
-      "description": "AI agent using RAG and LangChain that translates natural language into secure, dynamic SQL queries for non-technical users.",
-      "content": "## Overview\n\nAn AI-powered chatbot that lets non-technical users query complex databases using plain English. The system uses LangChain with a RAG pipeline to understand database schema context and generate accurate, safe SQL queries in real time.\n\n## The Problem\n\nBusiness analysts and operations teams frequently needed data insights but had to wait for developers to write SQL queries — a bottleneck that slowed decision-making. The goal was to give non-technical users direct, self-serve access to data through a conversational interface.\n\n## How It Works\n\nAt setup, the database schema (table names, column names, relationships, sample values) is embedded into a vector database. When a user asks a question, the query is embedded and the most relevant schema chunks are retrieved. These are injected into the LLM prompt alongside strict safety constraints.\n\n## Key Features\n\n- Natural language to SQL translation via LangChain\n- RAG pipeline for schema-aware query generation\n- Read-only query enforcement (no destructive operations)\n- Query explanation in plain English alongside the SQL\n- Support for complex JOINs, aggregations, and subqueries\n- Vector DB stores schema embeddings for fast semantic retrieval\n- Query history and bookmarking for frequent lookups\n\n## Challenges\n\nThe hardest problem was handling ambiguous queries. When a user asks about \"last month's sales\", the model needs to understand the correct date column, format, and timezone. Solved by enriching schema embeddings with sample data and column descriptions.\n\n## Outcome\n\nReduced ad-hoc data requests to the engineering team by a significant margin. Non-technical team members can now get instant answers without writing a single line of SQL.\n\n## Case Study — Challenges Faced & How They Were Solved\n\nBuilding a production-grade RAG chatbot that businesses actually trust is harder than the demo videos suggest. Here's what went wrong and what got fixed.\n\n### Challenge 1 — Chunking Strategy Lost Semantic Context\n\nThe first naive pass split documents on a fixed character count. The retrieval results looked plausible in benchmarks but produced wrong answers in practice — questions that needed two adjacent paragraphs would only get one, and the LLM happily filled the gap with hallucinated context.\n\n**Solution:** moved to **recursive paragraph-aware splitting** with sliding-window overlap (15% of chunk size). Each chunk carries metadata tags — source document, section heading, parent chunk ID — so the LLM can stitch context back together when needed. Retrieval recall on the eval set jumped from 62% to 89%.\n\n### Challenge 2 — Multilingual Embeddings Were Mediocre\n\nCustomers needed English and Hindi support. The first version used a single English-trained embedding model and translated Hindi queries to English before embedding. Latency went up, translation errors stacked with retrieval errors, and Hindi-specific phrasing got mangled.\n\n**Solution:** switched to **multilingual embedding models** (e5-multilingual / bge-m3) that share an embedding space across languages. A Hindi query now retrieves the most relevant English chunks directly — no translation step. The LLM's final response respects the query language via a system-prompt directive (\"respond in the same language as the user's question\").\n\n### Challenge 3 — Streaming Without Choking the Frontend\n\nSynchronous generation made the UI feel dead for 5–15 seconds per response. Users assumed the bot was broken and refreshed.\n\n**Solution:** **token-by-token streaming** via Server-Sent Events from the backend, rendered with a typewriter-style component on the frontend. First-token latency dropped to under 800ms. Users see the response building in real time, which both improves perceived speed and signals \"this thing is alive.\"\n\n### Challenge 4 — Hallucinations on Out-of-Scope Questions\n\nEven with RAG, the LLM would confidently answer questions the knowledge base didn't cover. \"What's your refund policy?\" → invented refund terms. Trust killer.\n\n**Solution:** added a **confidence scoring layer**. After retrieval, compute the average similarity score of the top-k chunks. If below a threshold (tuned per deployment), the LLM is prompted with explicit instructions to say \"I don't have information on that — let me connect you with a human\" and route the conversation to a support handoff queue. False-positive answers dropped to near zero.\n\n### Challenge 5 — Knowledge Base Drift\n\nCustomers added, edited, and removed docs constantly. The vector store became stale within days — old chunks for deleted docs were still being retrieved.\n\n**Solution:** built an **admin dashboard** with an indexed change log. Every upload triggers a re-chunk + re-embed of the affected document, marks superseded chunks as deleted (soft delete with version pointers), and re-runs eval queries to verify the change didn't break existing flows. Nightly cron prunes orphaned chunks.\n\n### Challenge 6 — Cost Spirals From Long Conversations\n\nConversation history kept getting stuffed into the LLM context window. By turn 10, prompts were 8000 tokens and costs were 5x what they should have been.\n\n**Solution:** **sliding-window memory** keeping the last 10 turns at full fidelity, with older turns summarized into a single rolling summary. Token usage per request stays bounded; the bot still remembers what was discussed earlier in the session because it lives in the summary.\n\n### Challenge 7 — Source Attribution for Trust\n\nBusiness stakeholders wanted to see *where* an answer came from. \"Trust me, it's in the docs\" wasn't enough.\n\n**Solution:** every response carries inline citation markers ([1], [2], [3]) that link to the source chunks displayed alongside the chat. Hovering surfaces the exact snippet that informed each part of the answer. Customers stopped asking \"is this right?\" because they could verify it themselves in two clicks.\n\n### Challenge 8 — Embedding-Model Migration Without Re-indexing the World\n\nWhen a better embedding model dropped (text-embedding-3-large), upgrading meant re-embedding millions of chunks. Customers couldn't tolerate hours of downtime, and re-running the whole pipeline at once would have melted the rate limits.\n\n**Solution:** **dual-write migration**. The new model embeds new chunks immediately; a background worker slowly re-embeds old chunks in priority order (most-queried first). Both vector stores serve reads during migration via a query-fanout layer that takes the higher-confidence result. Migration completed over two weeks with zero downtime.\n\n### What I'd Do Differently Next Time\n\n- **Build the eval harness first.** Half the chunking-strategy iteration was guesswork before I had a proper retrieval-recall benchmark. Start with 100 hand-labeled question-chunk pairs on day one.\n- **Treat the knowledge base as a versioned artifact** — Git-like history, not a bag of documents.\n- **Pin model versions explicitly in the prompt** — silent OpenAI model swaps shifted answer style mid-quarter.\n\n### Outcome\n\nLive RAG chatbot serving production traffic in English and Hindi, with source attribution, confidence-gated handoff, and a customer-facing admin dashboard for knowledge-base updates. Answer accuracy on the internal eval suite holds above 90%, hallucination rate sits near zero on in-scope questions, and the support team uses the same dashboard to keep the bot aligned with shifting product copy.",
+      "name": "Raccog AI platform",
+      "description": "I am the solo founder of Raccog, a website and app platform. My work includes Python backend APIs built with FastAPI and document-based retrieval-augmented generation.",
+      "content": "The wider product uses Next.js, React, and TypeScript, with MongoDB and S3-backed storage. I also implemented persistent generation jobs, sandboxed React previews, database-backed publishing, and release snapshots, and developed analytics and workflow features.\n\nThe complete case study covers how this backend and AI work fits into the generation, preview, and publishing experience.",
       "tech": [
-        "Node.js",
+        "Python",
+        "FastAPI",
+        "RAG",
+        "Next.js",
+        "React",
         "TypeScript",
-        "LangChain",
-        "Vector DB",
-        "SQL",
-        "RAG"
+        "MongoDB",
+        "AWS S3"
       ],
-      "year": "2024",
+      "year": "",
       "link": "https://raccog.com",
-      "github": "",
+      "github": "#",
       "status": "Completed",
       "featured": false,
-      "published": true
+      "published": true,
+      "subtitle": "Python APIs and document-based RAG",
+      "caseStudy": "/blogs/building-raccog-ai-platform",
+      "links": [
+        {
+          "label": "Visit Raccog",
+          "url": "https://raccog.com"
+        }
+      ],
+      "role": "Solo Founder",
+      "statusLabel": "Live platform",
+      "section": "unlisted",
+      "order": 20,
+      "seoTitle": "Raccog AI Platform | Rahul Panchal",
+      "seoDescription": "An overview of Rahul Panchal's Raccog work, including Python/FastAPI APIs, document-based RAG, previews, and publishing. Read the complete case study.",
+      "caseStudyLabel": "Read the complete Raccog case study"
     },
     {
       "id": "6",
       "slug": "ai-chatbot-rag",
-      "name": "AI Chatbot with RAG Pipeline",
-      "description": "LLM-powered conversational AI embedded into web products with context awareness, multi-language support, and RAG for factual accuracy.",
-      "content": "## Overview\n\nAn LLM-powered conversational AI system designed to be embedded into web products as a support and discovery tool. It understands context across a session, retrieves relevant knowledge from a vector database, and responds in the user's language — supporting English and Hindi.\n\n## The Problem\n\nGeneric chatbot widgets give generic answers. Businesses need an AI assistant that actually knows their product — their FAQs, their docs, their pricing, their edge cases — and can answer specific questions without hallucinating. The challenge is combining the fluency of LLMs with the accuracy of a retrieval system.\n\n## How It Works\n\nThe system uses a Retrieval-Augmented Generation (RAG) architecture. At setup, the client's knowledge base is chunked and embedded into a vector database. At query time, the user's message is embedded, the top-k most semantically relevant chunks are retrieved, and injected into the LLM's context window alongside a strict system prompt.\n\n## Key Features\n\n- Session-aware conversation memory (last 10 turns)\n- Retrieval-Augmented Generation for factual accuracy\n- Automatic language detection and response matching\n- Admin dashboard to upload and manage the knowledge base\n- Confidence scoring — low-confidence responses route to human support\n- Streaming responses for instant perceived performance\n\n## Challenges\n\nThe hardest problem was chunking strategy. Splitting documents naively by character count lost semantic context. The solution was a hybrid approach: recursive paragraph-aware splitting with overlap, plus metadata tagging so retrieved chunks carry their source document and section heading.\n\n## Outcome\n\nCore RAG pipeline complete and live. Multilingual support active for English and Hindi. Admin dashboard for knowledge base management deployed.",
+      "name": "Document-based RAG in Raccog",
+      "description": "My confirmed document-RAG work is part of Raccog. I developed Python backend APIs with FastAPI and implemented retrieval-augmented generation using documents as the information source.",
+      "content": "This work sits within a broader website and app platform that includes generation jobs, previews, storage, and publishing. The Raccog case study describes that product and the work I owned.",
       "tech": [
-        "LangChain",
-        "Node.js",
-        "TypeScript",
-        "Vector DB",
-        "OpenAI API",
+        "Python",
+        "FastAPI",
         "RAG"
       ],
-      "year": "2024",
+      "year": "",
       "link": "#",
-      "github": "",
+      "github": "#",
       "status": "Completed",
       "featured": false,
-      "published": true
+      "published": true,
+      "caseStudy": "/blogs/building-raccog-ai-platform",
+      "statusLabel": "Part of Raccog",
+      "section": "unlisted",
+      "order": 21,
+      "seoTitle": "Document-Based RAG in Raccog | Rahul Panchal",
+      "seoDescription": "Rahul Panchal's document-based RAG and Python/FastAPI work within Raccog, with a link to the complete product case study.",
+      "caseStudyLabel": "Read the Raccog case study"
     },
     {
       "id": "ai-crm-social",
       "slug": "ai-crm-social-suite",
-      "name": "AI CRM — Proposal Engine & Social Media Suite",
-      "description": "All-in-one CRM with embedded LLM-powered proposal generation and a unified social media manager — publish, schedule, and reply across Twitter/X, LinkedIn, Facebook, and Instagram from a single dashboard.",
-      "content": "## Overview\n\nDesigned and shipped a modern CRM platform that fuses two pain-points into one workspace: **AI-assisted proposal authoring** and a **multi-platform social media manager**. Sales reps generate contextual client proposals in seconds, marketing teams publish across every major network from one screen — and everything stays linked to the underlying customer record.\n\n## Problem Statement\n\nMid-market sales teams juggled three to five disconnected tools to do one job: a CRM for contacts, a doc editor for proposals, and per-platform schedulers (Buffer, Hootsuite, native apps) for social. Context-switching killed velocity, proposals took hours of copy-paste, and social posts rarely tied back to the deal pipeline. The brief: collapse the stack into a single product.\n\n## Architecture\n\nBackend is a **NestJS** monorepo split into bounded modules — `crm`, `proposals`, `social`, `billing`, `webhooks`. **PostgreSQL** is the system of record, **Redis** handles queues + rate-limit windows per provider, and **BullMQ** orchestrates background jobs (scheduled posts, inbound webhooks, proposal generation streaming). The frontend is **Next.js 16** with React Server Components and a thin tRPC layer for type-safe contracts.\n\n## AI Proposal Engine\n\nProposals are generated from a **client context graph** — recent emails, meeting notes, deal stage, products of interest, and historical wins are stitched together with **LangChain + RAG** against a per-tenant vector store (pgvector). The LLM (OpenAI GPT-4o, with Gemini as fallback) drafts the proposal, scores tone, and suggests an upsell. Reps can:\n\n- Pick a template (SOW, retainer, fixed-bid, MSA)\n- Tune voice (formal / consultative / direct)\n- Re-prompt sections inline (\"make the timeline more aggressive\")\n- Export to PDF or send as a tracked link with view analytics\n\n## Social Media Suite\n\nA single composer publishes natively to **Twitter/X, LinkedIn (personal + company pages), Facebook Pages, Instagram (Reels, posts, stories)**. Each connection is OAuth2 with secure token refresh stored in **AWS KMS**.\n\nCore capabilities:\n\n- **Unified composer** — write once, auto-truncate or auto-thread per platform character limits\n- **Schedule queue** — drag-drop calendar, time-zone aware, best-time-to-post recommender (AI)\n- **Inbox** — DMs and comments from every platform stream into one threaded view\n- **AI assist** — generate captions, hashtags, reply suggestions, repurpose long-form into a Twitter thread\n- **Media library** — S3-backed, with per-platform aspect-ratio auto-crop\n- **Analytics** — engagement, reach, click-through pulled via official Graph/Marketing APIs into a Recharts dashboard\n\n## AWS Infrastructure\n\n- **ECS Fargate**: stateless API + worker services, auto-scaled on queue depth\n- **RDS (PostgreSQL + pgvector)**: relational data + embeddings co-located, single-tenant schemas via search_path\n- **ElastiCache (Redis)**: BullMQ queues, rate-limit windows, session cache\n- **S3 + CloudFront**: media uploads, signed URLs for proposal PDFs\n- **KMS**: envelope-encryption for OAuth tokens and per-tenant secrets\n- **EventBridge**: scheduled jobs (token refresh, analytics roll-ups, draft expiry)\n- **CloudWatch + OpenTelemetry**: distributed tracing across NestJS + worker pods\n\n## Key Features\n\n- Multi-tenant CRM (contacts, deals, pipeline, activities, email sync)\n- AI proposal generator with RAG against tenant knowledge base\n- Native posting to Twitter/X, LinkedIn, Facebook, Instagram\n- Unified inbox: DMs + comments across all networks\n- Drag-drop content calendar with time-zone aware scheduling\n- Best-time-to-post recommender (trained per-account)\n- Approval workflows for enterprise teams\n- Webhook + Zapier integrations for inbound automation\n- Role-based permissions with full audit trail\n- Stripe-powered subscription billing\n\n## Outcome\n\n- Proposal turnaround dropped from **~3 hours to under 8 minutes** on average\n- Customers consolidated **3–5 tools into one**, cutting SaaS spend per seat\n- Social-to-deal attribution made it possible to credit pipeline back to marketing posts — a previously unmeasurable metric\n- Platform now handles **thousands of scheduled posts per day** across tenants with zero missed-publish incidents\n\n## Stack Snapshot\n\nNestJS · Next.js 16 · TypeScript · PostgreSQL + pgvector · Redis · BullMQ · LangChain · OpenAI GPT-4o · Gemini · AWS ECS / RDS / S3 / KMS / EventBridge · Stripe · Twitter API v2 · LinkedIn Marketing API · Meta Graph API\n\n## Case Study — Challenges Faced & How They Were Solved\n\nBuilding this platform meant solving a stack of problems that don't normally show up in greenfield CRMs. Below are the ones worth writing down — the rest got smoothed out in code review.\n\n### Challenge 1 — Streaming AI Proposals Without Locking the UI\n\nEarly proposal generation ran synchronously: hit the LLM, wait 30–60 seconds, return the full response. The UX was painful — a spinning loader on a deal worth $50k feels wrong, and users would refresh and re-fire the request, doubling the cost.\n\n**Solution:** rebuilt the endpoint as a Server-Sent Events stream backed by NestJS controllers returning a **ReadableStream**. The LLM emits tokens, the backend forwards them over **text/event-stream**, and the Next.js client renders chunks as they arrive. A connection retry layer (Backoff with jitter) handles dropped streams without re-charging the API call. End result: the first token appears in under a second, and users see the proposal materialize in real time — same content, completely different perceived performance.\n\n### Challenge 2 — Multi-Platform Posting With Wildly Different APIs\n\nEach social network treats \"post a message\" differently. Twitter v2 wants a JSON body and 280 chars. LinkedIn wants UGC posts with a person URN or organization URN — different endpoints, different shapes. Meta Graph API uses photo, video, reel, and story types each with their own upload pipeline (resumable upload sessions, container creation, then publish). Instagram has a two-step publish-with-container that fails silently if media isn't fully uploaded.\n\n**Solution:** built a **provider-agnostic facade** at the service layer. Each platform implements the same SocialProvider interface (**publish**, **fetchInbox**, **refreshToken**), and a **NormalizedPost** type carries the platform-independent payload. Per-provider strategies handle the dialect differences: text auto-truncation for Twitter, multi-step container publishing for Instagram, organization-context resolution for LinkedIn company pages. Adding a new platform now means writing one class, not touching the rest of the codebase.\n\n### Challenge 3 — OAuth Token Storage & Refresh\n\nStoring OAuth tokens for thousands of connected accounts is a liability surface. A single breach leaks production credentials for every customer's social presence. Refresh tokens expire silently in some flows (Twitter v2 access tokens last 2 hours and need to be refreshed continuously), and a failed refresh during a scheduled post means a missed publish.\n\n**Solution:** **envelope encryption** with AWS KMS. Tokens are encrypted at rest using a per-tenant KMS data key; the encrypted ciphertext sits in PostgreSQL, the key never touches the application memory. A dedicated **BullMQ refresh worker** runs on a 30-minute cadence, refreshing any token within an hour of expiry. Failures route to a **dead-letter queue** that alerts the owning user via in-app notification: \"reconnect your LinkedIn account.\"\n\n### Challenge 4 — Best-Time-to-Post Recommender\n\nThe naive version was \"post at 9am Tuesday\" — same for every account. Useless. Customers in different industries, time zones, and audience sizes had completely different optimal windows.\n\n**Solution:** built a per-account engagement model. For every published post, the platform records reach and engagement metrics pulled from the official APIs at 1h, 6h, 24h, and 72h post-publish. A nightly batch job aggregates the last 90 days of data per account, computes engagement-per-hour heatmaps, and surfaces the top 3 recommended slots in the schedule UI. Cold-start accounts get industry-tier defaults; the model takes over once enough first-party data exists.\n\n### Challenge 5 — Unified Inbox Across Webhook & Polling Sources\n\nLinkedIn doesn't have public webhooks for personal DMs. Twitter has them but with strict eligibility. Meta supports webhooks for Pages but the subscription flow is fragile and breaks silently. Stitching a real-time-feeling inbox out of this mess is harder than it sounds.\n\n**Solution:** **hybrid ingestion**. Where webhooks exist (Meta Pages, Instagram), they fire into an SQS queue and stream into the inbox in real time. Where they don't (LinkedIn, sometimes Twitter), a **polling worker** runs at 60s intervals with exponential backoff if rate limits kick in. All inbound messages normalize into a single **InboxMessage** schema and surface in a threaded view that doesn't care about the underlying provider.\n\n### Challenge 6 — Tenant Isolation Without Schema-per-Tenant Overhead\n\nMulti-tenant SaaS classic problem. Per-tenant database = clean isolation, terrible cost and migration story. Shared schema with **tenant_id** columns = cheap, but one missing WHERE clause and data leaks across customers.\n\n**Solution:** **row-level security** in PostgreSQL combined with a NestJS interceptor that sets **SET LOCAL app.tenant_id = '...'** at the start of every request. RLS policies on every table enforce the boundary at the database layer — even a buggy query physically cannot return another tenant's rows. The application code reads as if there's no tenancy concern; the database enforces the invariant.\n\n### Challenge 7 — Cost Control on LLM Usage\n\nLLM bills can spiral. A single chatty user generating 50 long proposals a day on GPT-4o costs more than the subscription they're paying. Without guardrails, the unit economics break.\n\n**Solution:** **per-tenant budget tracking** at the gateway layer. Every LLM call is wrapped by a middleware that increments a Redis counter scoped to **tenant:month**. When the budget is 80% spent, the user sees a banner; at 100%, generation falls back to a smaller model (or hard-stops on enterprise plans with overage billing). **Prompt caching** on Anthropic and OpenAI cuts repeat-context costs by ~70% on long client-context graphs.\n\n### Challenge 8 — Workflow Approval for Enterprise Customers\n\nSolo users hit publish and go. Marketing teams at larger customers need a \"manager must approve before posting\" gate, with a sane review UI and an audit trail.\n\n**Solution:** a small state machine added to scheduled posts — **draft → pending_review → approved | rejected → scheduled → published**. Email + in-app notifications route to designated reviewers. Approvers see the rendered post-preview per platform side-by-side with the original draft, can comment inline, and approve or reject with a reason. Every transition is logged to an immutable audit table tied to user ID, timestamp, and IP.\n\n### What I'd Do Differently Next Time\n\n- **Start with the provider facade on day one** — I built it in retrofit during the LinkedIn integration. Adding it earlier would have saved a week.\n- **Pin the LLM model version explicitly** — silent model swaps from OpenAI shifted proposal tone mid-sprint. Now every prompt names the exact model version.\n- **Use SSE end-to-end** — including for inbox updates. Polling worked but kept adding latency where a server push would have been simpler.\n- **Treat OAuth refresh as a first-class workflow**, not an afterthought. Half the on-call pages in the first month were token refresh failures.\n\n### Outcome\n\nThe platform now ships proposals in under 8 minutes that used to take 3 hours, runs thousands of scheduled posts a day with zero missed publishes, and gives customers a single dashboard for what used to be 3–5 tools. The hardest part of building it wasn't the AI — it was the integration plumbing. The case study above is mostly the plumbing.",
+      "name": "AI-driven marketing and CRM platform",
+      "description": "I built a CRM and advertising platform with automated lead scoring and campaign optimization. The work used NestJS, Node.js, React, n8n, OpenAI, and AWS, including Lambda, SQS, and SES for asynchronous analysis and email delivery.",
+      "content": "",
       "tech": [
         "NestJS",
-        "Next.js",
-        "TypeScript",
-        "PostgreSQL",
-        "pgvector",
-        "Redis",
-        "BullMQ",
-        "LangChain",
+        "Node.js",
+        "React",
+        "n8n",
         "OpenAI",
-        "Gemini",
-        "AWS",
-        "Docker",
-        "Stripe"
+        "AWS Lambda",
+        "SQS",
+        "SES"
       ],
       "year": "2025",
-      "link": "https://merm.raccog.com/",
-      "github": "",
+      "link": "#",
+      "github": "#",
       "status": "Completed",
-      "featured": true,
-      "published": true
+      "featured": false,
+      "published": true,
+      "section": "other",
+      "order": 10
     },
     {
       "id": "ai-testing-automation",
@@ -159,8 +288,8 @@
       "link": "#",
       "github": "",
       "status": "In Progress",
-      "featured": true,
-      "published": true
+      "featured": false,
+      "published": false
     }
   ]
 }

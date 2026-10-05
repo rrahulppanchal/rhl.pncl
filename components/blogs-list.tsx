@@ -3,11 +3,11 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import type { Blog } from '@/types/blog';
-import { NewsletterForm } from './newsletter-form';
 
 const POSTS_PER_PAGE = 5;
 
 const categoryColors: Record<string, { pill: string; dot: string }> = {
+  'Case Studies':    { pill: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/5', dot: 'bg-emerald-400' },
   'Web Development': { pill: 'text-primary border-primary/30 bg-primary/5',         dot: 'bg-primary' },
   'AI/ML':           { pill: 'text-purple-400 border-purple-400/30 bg-purple-400/5', dot: 'bg-purple-400' },
   'Database':        { pill: 'text-blue-400 border-blue-400/30 bg-blue-400/5',       dot: 'bg-blue-400' },
@@ -161,7 +161,7 @@ export function BlogsList({ blogs, categories }: BlogsListProps) {
           type="text"
           value={search}
           onChange={e => handleSearchChange(e.target.value)}
-          placeholder="Search articles... (press / to focus)"
+          placeholder="Search articles and project stories (press / to focus)"
           className="w-full bg-input border border-border text-foreground pl-10 pr-10 py-3 focus:border-primary focus:border-l-2 focus:outline-none transition-all text-sm font-mono placeholder:text-muted-foreground/40"
         />
         {search ? (
@@ -426,8 +426,27 @@ export function BlogsList({ blogs, categories }: BlogsListProps) {
         </nav>
       )}
 
-      {/* ── Newsletter ── */}
-      <NewsletterForm />
+      {/* ── More about my work ── */}
+      <section className="border border-border p-8">
+        <h3 className="text-xl font-bold text-foreground mb-2 font-mono">More about my work</h3>
+        <p className="text-muted-foreground text-sm mb-6 max-w-lg">
+          Browse my projects or get in touch about a senior engineering role or product you need help building.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/projects"
+            className="px-5 py-2.5 border border-primary/50 text-primary font-mono text-xs hover:bg-primary/10 transition-all inline-flex items-center gap-2"
+          >
+            View projects →
+          </Link>
+          <Link
+            href="/contact"
+            className="px-5 py-2.5 bg-primary text-primary-foreground font-mono text-xs hover:opacity-90 transition-opacity inline-flex items-center gap-2"
+          >
+            Contact me →
+          </Link>
+        </div>
+      </section>
 
     </div>
   );

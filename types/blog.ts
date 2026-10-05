@@ -10,6 +10,9 @@ export interface Blog {
   tags: string[];
   published: boolean;
   featured: boolean;
+  /** Full <title> override (rendered without the site-name template) */
+  seoTitle?: string;
+  seoDescription?: string;
 }
 
 export interface DB {
